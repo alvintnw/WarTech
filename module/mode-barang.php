@@ -26,7 +26,7 @@ function insert($data)
     $id          = mysqli_real_escape_string($koneksi, $data['kode']);
     $barcode     = mysqli_real_escape_string($koneksi, $data['barcode']);
     $name        = mysqli_real_escape_string($koneksi, $data['name']);
-    $satu        = mysqli_real_escape_string($koneksi, $data['satuan']);
+    $satuan      = mysqli_real_escape_string($koneksi, $data['satuan']);
     $harga_beli  = mysqli_real_escape_string($koneksi, $data['harga_beli']);
     $harga_jual  = mysqli_real_escape_string($koneksi, $data['harga_jual']);
     $stock_min   = mysqli_real_escape_string($koneksi, $data['stock_minimal']);
@@ -65,6 +65,66 @@ function delete($id, $gbr){
     if ($gbr != 'default-brg.jpg'){
         unlink('../asset/image/' . $gbr);
     }
+
+    return mysqli_affected_rows($koneksi);
+}
+
+function update($data){
+    global $koneksi;
+
+    $id          = mysqli_real_escape_string($koneksi, $data['kode']);
+    $barcode     = mysqli_real_escape_string($koneksi, $data['barcode']);
+    $name        = mysqli_real_escape_string($koneksi, $data['name']);
+    $satuan      = mysqli_real_escape_string($koneksi, $data['satuan']);
+    $harga_beli  = mysqli_real_escape_string($koneksi, $data['harga_beli']);
+    $harga_jual  = mysqli_real_escape_string($koneksi, $data['harga_jual']);
+    $stock_min   = mysqli_real_escape_string($koneksi, $data['stock_minimal']);
+    $gbrlama   = mysqli_real_escape_string($koneksi, $data['oldImg']);
+    $gambar      = mysqli_real_escape_string($koneksi, $_FILES['image']['name']);
+
+    // cek  barcode lama
+    $queryBarcode = mysqli_query($koneksi, "SELECT * FROM tbl_barang WHERE barcode = '$barcode'");
+    $dataBrg  = mysqli_fetch_assoc($queryBarcode);
+    $curBarcode    = $dataBrg['barcode'];
+
+    // barcode baru
+    $cekBarcode  = mysqli_query($koneksi, "SELECT * FROM tbl_barang WHERE barcode = '$barcode'");
+
+    // jika barcode diganti
+    if ($barcode !== $curBarcode) {
+        // jika barcode sudah ada
+        if (mysqli_num_rows($cekBarcode)) {
+            echo '<script>alert("Kode barcode sudah ada, barang gagal diperbarui")</script>';
+            return false;
+        }  
+    }
+
+    // cek gambar 
+    if ($gambar != null) {
+        $url = "index.php";
+        if ($gbrlama == 'default-brg.jpg') {
+            $nmgbr = $id;
+        } else {
+            $nmgbr = $id . '.' . rand(10,1000);
+        }
+        $imgBrg = uploadimg(null, $id);
+        if ($gbrlama != 'default-brg.jpg'){
+            @unlink('../asset/image/' . $gbrlama);
+        } 
+    } else {
+        $imgBrg = $gbrlama;
+    }
+
+    mysqli_query($koneksi, "UPDATE tbl_barang SET 
+                            barcode       = '$barcode', 
+                            nama_barang   = '$name',
+                            harga_beli    = $harga_beli,
+                            harga_jual    = $harga_jual,
+                            satuan        = '$satuan',
+                            stock_minimal = $stock_min,
+                            gambar        = '$imgBrg'
+                            WHERE id_barang = '$id'
+                            ");
 
     return mysqli_affected_rows($koneksi);
 }

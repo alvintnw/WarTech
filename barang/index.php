@@ -40,6 +40,23 @@ if ($msg == 'deleted'){
             </script>";
 }
 
+if ($msg == 'updated'){
+
+    $alert = "<script>
+                    $(document).ready(function(){
+                        $(document).Toasts('create',{
+                            title : 'Sukses',
+                            body  : 'Data barang berhasil diperbarui..',
+                            class : 'bg-success',
+                            icon  : 'fas fa-check-circle', 
+                            position : 'bottomRight',
+                            autohide : true,
+                            delay : 5000,
+                        })
+                    });
+            </script>";
+}
+
 ?>
 
 <div class="content-wrapper">
@@ -101,6 +118,8 @@ if ($msg == 'deleted'){
                                     <td class="text-center"><?= number_format($brg
                                     ['harga_jual'],0,',','.') ?></td>
                                     <td>
+                                        <a href="form-barang.php?id=<?= $brg['id_barang'] ?>&msg=editing" class="btn btn-warning 
+                                        btn-sm" title="edit barang"><i class="fas fa-pen"></i></a>
                                         <a href="?id=<?= $brg['id_barang'] ?>&gbr=<?= $brg
                                         ['gambar'] ?>&msg=deleted" class="btn btn-danger 
                                         btn-sm" title="hapus barang" onclick="return confirm
