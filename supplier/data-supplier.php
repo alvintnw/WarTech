@@ -32,6 +32,14 @@ if ($msg == 'deleted') {
               </div>';
 }
 
+if ($msg == 'updated') {
+    $alert = '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-check-circle"></i> Alert!</h5>
+                Supplier berhasil diperbarui..
+              </div>';
+}
+
 if ($msg == 'aborted') {
     $alert = '<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -103,7 +111,8 @@ if ($msg == 'aborted') {
                                     <td><?= $supplier['alamat'] ?></td>
                                     <td><?= $supplier['deskripsi'] ?></td>
                                     <td>
-                                        <a href="" class="btn btn-sm btn-warning" title="edit supplier">
+                                        <a href="edit-supplier.php?id=<?= $supplier['id_supplier'] ?>" 
+                                            class="btn btn-sm btn-warning" title="edit supplier">
                                             <i class="fas fa-pen"></i>
                                         </a>
 

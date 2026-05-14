@@ -1,6 +1,6 @@
 <?php
 
-function uploadimg($url = null)
+function uploadimg($url = null, $name = null)
 {
     $namafile = $_FILES['image']['name'];
     $ukuran = $_FILES['image']['size'];
@@ -42,7 +42,11 @@ function uploadimg($url = null)
         }
     }
 
-    $namaFileBaru = rand(10, 1000) . '-' . $namafile;
+    if ($name != null) {
+        $namaFileBaru = $name . '.' . $ekstensiGambar;
+    } else  {
+        $namaFileBaru = rand(10, 1000) . '-' . $namafile;
+    }
 
     move_uploaded_file($tmp, '../asset/image/' . $namaFileBaru);
 
@@ -95,7 +99,7 @@ function menuHome()
 
 function menuMaster()
 {
-    if (userMenu() == 'supplier') {
+    if (userMenu() == 'supplier'or UserMenu() == 'customer' or userMenu() == 'barang') {
         $result = 'menu-is-opening menu-open';
     } else {
         $result = null;
@@ -128,6 +132,17 @@ function menuUser()
 function menuSupplier()
 {
     if (userMenu() == 'supplier') {
+        $result = 'active';
+    } else {
+        $result = null;
+    }
+
+    return $result;
+}
+
+function menuBarang()
+{
+    if (userMenu() == 'barang') {
         $result = 'active';
     } else {
         $result = null;

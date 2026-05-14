@@ -50,13 +50,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= $main_url ?>customer/data-customer.php" class="nav-link">
                                 <i class="far fa-circle nav-icon text-sm"></i>
                                 <p>Customer</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= $main_url ?>barang" class="nav-link <?= menubarang() ?>">
                                 <i class="far fa-circle nav-icon text-sm"></i>
                                 <p>Barang</p>
                             </a>
