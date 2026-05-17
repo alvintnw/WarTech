@@ -151,4 +151,88 @@ function menuBarang()
     return $result;
 }
 
-?>
+function menuBeli()
+{
+    if (userMenu() == 'pembelian') {
+        $result = 'active';
+    } else {
+        $result = null;
+    }
+
+    return $result;
+}
+
+function menuJual()
+{
+    if (userMenu() == 'penjualan') {
+        $result = 'active';
+    } else {
+        $result = null;
+    }
+
+    return $result;
+}
+
+
+
+function laporanStock()
+{
+    if (userMenu() == 'stock') {
+        $result = 'active';
+    } else {
+        $result = null;
+    }
+
+    return $result;
+}
+
+function laporanBeli()
+{
+    if (userMenu() == 'laporan-pembelian') {
+        $result = 'active';
+    } else {
+        $result = null;
+    }
+
+    return $result;
+}
+
+function laporanJual()
+{
+    if (userMenu() == 'laporan-penjualan') {
+        $result = 'active';
+    } else {
+        $result = null;
+    }
+
+    return $result;
+}
+
+function menuCustomer()
+{
+    if (userMenu() == 'customer') {
+        $result = 'active';
+    } else {
+        $result = null;
+    }
+
+    return $result;
+}
+
+function in_date($tgl){
+    $tg  = substr($tgl, 8, 2);
+    $bln = substr($tgl, 5, 2);
+    $thn = substr($tgl, 0, 4);
+    return $tg . "-" . $bln . "-" . $thn;
+}
+
+function omzet(){
+    global $koneksi;
+
+    $queryOmzet = mysqli_query($koneksi, "SELECT sum(total) as omzet FROM 
+    tbl_jual_head");
+    $data = mysqli_fetch_assoc($queryOmzet);
+    $omzet = number_format($data['omzet'],0,','.'.');
+
+    return $omzet;
+}
