@@ -97,6 +97,7 @@ if (isset($_POST['koreksi'])) {
                                     <select name="level" id="level" class="form-control" required>
                                         <option value="">-- Level User --</option>
                                         <option value="1" <?= selectUser1($level) ?>>Pemilik</option>
+                                        <option value="2" <?= selectUser2($level) ?>>Kasir</option>
                                     </select>
                                 </div>
 
