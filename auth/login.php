@@ -18,11 +18,14 @@ if (isset($_POST['login'])) {
 
     if (mysqli_num_rows($queryLogin) === 1) {
         $row = mysqli_fetch_assoc($queryLogin);
-        // set session
-$_SESSION["ssLoginPOS"] = true;
-$_SESSION["ssUserPOS"] = $username;
 
+        // REVISI: Pindahkan pengecekan password_verify ke atas sebelum set session
         if (password_verify($password, $row['password'])) {
+            
+            // SET SESSION BARU DI SINI (Jika password benar-benar cocok)
+            $_SESSION["ssLoginPOS"] = true;
+            $_SESSION["ssUserPOS"] = $username;
+
             header("location: ../dashboard.php");
             exit();
         } else {
@@ -45,16 +48,12 @@ $_SESSION["ssUserPOS"] = $username;
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= $main_url ?>asset/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
 
-    <!-- icheck bootstrap -->
     <link rel="stylesheet" href="<?= $main_url ?>asset/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
-    <!-- Theme style -->
     <link rel="stylesheet" href="<?= $main_url ?>asset/AdminLTE-3.2.0/dist/css/adminlte.min.css">
 
-    <!-- favicon -->
     <link rel="shortcut icon" href="<?= $main_url ?>asset/image/cart.png" type="image/x-icon">
 
     <link rel="stylesheet" href="style.css">
@@ -103,13 +102,10 @@ $_SESSION["ssUserPOS"] = $username;
         </div>
     </div>
 
-    <!-- jQuery -->
     <script src="<?= $main_url ?>asset/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
 
-    <!-- Bootstrap 4 -->
     <script src="<?= $main_url ?>asset/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- AdminLTE App -->
     <script src="<?= $main_url ?>asset/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
 </body>
 </html>
