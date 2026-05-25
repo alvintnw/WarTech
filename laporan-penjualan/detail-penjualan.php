@@ -229,18 +229,19 @@ $penjualan = getData("SELECT * FROM tbl_jual_detail WHERE no_jual = '$id'");
                         </thead>
 
                         <tbody>
-                            <?php
+                        <?php
                             $no = 1;
 
-                            foreach ($penjualan as $jual) { ?>
+                                foreach ($penjualan as $jual) { 
+                        ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
 
                                     <td>
-                                        <strong><?= $jual['id_barang'] ?></strong>
+                                        <strong><?= $jual['barcode'] ?></strong>
                                     </td>
 
-                                    <td><?= $jual['nama_barang'] ?></td>
+                                    <td><?= $jual['nama_brg'] ?></td>
 
                                     <td class="text-center">
                                         <span class="price-badge">
