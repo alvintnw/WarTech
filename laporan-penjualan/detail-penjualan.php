@@ -63,16 +63,37 @@ $penjualan = getData("SELECT * FROM tbl_jual_detail WHERE no_jual = '$id'");
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
+                        <?php
                             $no = 1;
-                            foreach($penjualan as $jual){ ?>
+
+                                foreach ($penjualan as $jual) { 
+                        ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
-                                    <td><?= $jual['barcode'] ?></td>
+
+                                    <td>
+                                        <strong><?= $jual['barcode'] ?></strong>
+                                    </td>
+
                                     <td><?= $jual['nama_brg'] ?></td>
-                                    <td class="text-center"><?= number_format($jual['harga_jual'],0,",",".") ?></td>
-                                    <td class="text-center"><?= $jual['qty'] ?></td>
-                                    <td class="text-center"><?= number_format($jual['jml_harga'],0,",",".") ?></td>
+
+                                    <td class="text-center">
+                                        <span class="price-badge">
+                                            Rp <?= number_format($jual['harga_jual'], 0, ",", ".") ?>
+                                        </span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="qty-badge">
+                                            <?= $jual['qty'] ?>
+                                        </span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="price-badge">
+                                            Rp <?= number_format($jual['jml_harga'], 0, ",", ".") ?>
+                                        </span>
+                                    </td>
                                 </tr>
                             <?php 
                             } 
