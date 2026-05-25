@@ -31,6 +31,17 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
             min-height: 100vh;
         }
 
+        .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
+                linear-gradient(135deg, #e0f7fa 0%, #fdf6e3 100%) !important;
+            min-height: 100vh;
+        }
+
+        .beach-header {
+            padding: 25px 5px 10px;
+        }
+
         .beach-title-box {
             display: flex;
             align-items: center;
@@ -81,6 +92,18 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
             color: #fff;
             padding: 20px 24px;
             border-bottom: none;
+            border: none !important;
+            border-radius: 24px !important;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,.08) !important;
+            background: rgba(255,255,255,.92) !important;
+        }
+
+        .beach-card .card-header {
+            background: linear-gradient(90deg, #00a884, #00bcd4) !important;
+            color: #fff !important;
+            padding: 20px 24px !important;
+            border-bottom: none !important;
         }
 
         .beach-card .card-title {
@@ -93,6 +116,11 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
             color: #00a884;
             border: none;
             border-radius: 12px;
+        .btn-beach-print {
+            background: #ffffff !important;
+            color: #00a884 !important;
+            border: none !important;
+            border-radius: 12px !important;
             font-weight: 700;
             padding: 8px 15px;
             box-shadow: 0 8px 18px rgba(0,0,0,.12);
@@ -112,6 +140,20 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
             background: #f1fbfc;
             color: #0077b6;
             border: none;
+        .btn-beach-print:hover {
+            background: #e8fff8 !important;
+            color: #00796b !important;
+        }
+
+        .beach-table {
+            border-collapse: separate !important;
+            border-spacing: 0 10px !important;
+        }
+
+        .beach-table thead th {
+            background: #f1fbfc !important;
+            color: #0077b6 !important;
+            border: none !important;
             font-weight: 800;
         }
 
@@ -122,6 +164,7 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
 
         .beach-table tbody td {
             border-top: none;
+            border-top: none !important;
             vertical-align: middle;
             padding: 16px 14px;
         }
@@ -244,6 +287,37 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
     </style>
 
     <div class="content-header">
+        .badge-total {
+            background: #e8fff8;
+            color: #00a884;
+            padding: 7px 12px;
+            border-radius: 12px;
+            font-weight: 800;
+        }
+
+        .btn-detail-beach {
+            background: linear-gradient(90deg, #00a884, #00bcd4) !important;
+            border: none !important;
+            border-radius: 12px !important;
+            color: #fff !important;
+            font-weight: 700;
+            padding: 7px 14px;
+        }
+
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(90deg, #00a884, #00bcd4);
+            color: #fff;
+            border-bottom: none;
+        }
+    </style>
+
+    <div class="content-header beach-header">
         <div class="container-fluid">
             <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
@@ -257,12 +331,22 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                         </div>
                     </div>
                 </div>
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <div>
+                            <h1>Laporan Pembelian</h1>
+                            <p>Data pembelian tampil lebih santai seperti suasana pantai</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right beach-breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="<?= $main_url ?>dashboard.php">Home</a>
                         </li>
                         <li class="breadcrumb-item active">Laporan Pembelian</li>
+                        <li class="breadcrumb-item active">Pembelian</li>
                     </ol>
                 </div>
             </div>
@@ -273,6 +357,8 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
         <div class="container-fluid">
             <div class="card beach-card">
 
+
+            <div class="card beach-card">
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-water mr-2"></i> Data Pembelian
@@ -280,6 +366,10 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                     <button type="button" class="btn btn-sm btn-cetak-beach float-right"
                         data-toggle="modal" data-target="#mdlPeriodeBeli">
                         <i class="fas fa-print"></i> Cetak
+
+                    <button type="button" class="btn btn-sm btn-beach-print float-right"
+                        data-toggle="modal" data-target="#mdlPeriodeBeli">
+                        <i class="fas fa-print mr-1"></i> Cetak
                     </button>
                 </div>
 
@@ -291,6 +381,7 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                                 <th>No Pembelian</th>
                                 <th>Tgl Pembelian</th>
                                 <th>Supplier</th>
+                                <th>Suplier</th>
                                 <th>Total Pembelian</th>
                                 <th style="width: 15%;" class="text-center">Opsi</th>
                             </tr>
@@ -299,12 +390,22 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                             <?php
                             $no = 1;
                             foreach ($pembelian as $beli): ?>
+
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            foreach ($pembelian as $beli) { ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
                                     <td><strong><?= $beli['no_beli'] ?></strong></td>
                                     <td><?= in_date($beli['tgl_beli']) ?></td>
                                     <td><?= $beli['suplier'] ?></td>
                                     <td><?= number_format($beli['total'], 0, ",", ".") ?></td>
+                                    <td>
+                                        <span class="badge-total">
+                                            Rp <?= number_format($beli['total'], 0, ",", ".") ?>
+                                        </span>
+                                    </td>
                                     <td class="text-center">
                                         <a href="detail-pembelian.php?id=<?= $beli['no_beli'] ?>&tgl=<?= in_date($beli['tgl_beli']) ?>"
                                             class="btn btn-sm btn-detail-beach"
@@ -318,7 +419,17 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                     </table>
                 </div>
 
+                                            Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
+
         </div>
     </section>
 
@@ -328,27 +439,34 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Periode Pembelian</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
                     <div class="form-group row">
                         <label for="tgl1" class="col-sm-3 col-form-label">Tanggal awal</label>
+                        <label class="col-sm-3 col-form-label">Tanggal awal</label>
                         <div class="col-sm-9">
                             <input type="date" class="form-control" id="tgl1">
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <label for="tgl2" class="col-sm-3 col-form-label">Tanggal akhir</label>
+                        <label class="col-sm-3 col-form-label">Tanggal akhir</label>
                         <div class="col-sm-9">
                             <input type="date" class="form-control" id="tgl2">
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="printDoc()">
                         <i class="fas fa-print"></i> Cetak
+                    <button type="button" class="btn btn-detail-beach" onclick="printDoc()">
+                        <i class="fas fa-print mr-1"></i> Cetak
                     </button>
                 </div>
             </div>

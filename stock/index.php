@@ -31,6 +31,17 @@ $stockBrg = getData("SELECT * FROM tbl_barang");
             min-height: 100vh;
         }
 
+        .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
+                linear-gradient(135deg, #e0f7fa 0%, #fdf6e3 100%) !important;
+            min-height: 100vh;
+        }
+
+        .beach-header {
+            padding: 25px 5px 10px;
+        }
+
         .beach-title-box {
             display: flex;
             align-items: center;
@@ -81,6 +92,18 @@ $stockBrg = getData("SELECT * FROM tbl_barang");
             color: #fff;
             padding: 20px 24px;
             border-bottom: none;
+            border: none !important;
+            border-radius: 24px !important;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,.08) !important;
+            background: rgba(255,255,255,.92) !important;
+        }
+
+        .beach-card .card-header {
+            background: linear-gradient(90deg, #00a884, #00bcd4) !important;
+            color: #fff !important;
+            padding: 20px 24px !important;
+            border-bottom: none !important;
         }
 
         .beach-card .card-title {
@@ -93,6 +116,11 @@ $stockBrg = getData("SELECT * FROM tbl_barang");
             color: #00a884;
             border: none;
             border-radius: 12px;
+        .btn-beach-print {
+            background: #ffffff !important;
+            color: #00a884 !important;
+            border: none !important;
+            border-radius: 12px !important;
             font-weight: 700;
             padding: 8px 15px;
             box-shadow: 0 8px 18px rgba(0,0,0,.12);
@@ -112,6 +140,20 @@ $stockBrg = getData("SELECT * FROM tbl_barang");
             background: #f1fbfc;
             color: #0077b6;
             border: none;
+        .btn-beach-print:hover {
+            background: #e8fff8 !important;
+            color: #00796b !important;
+        }
+
+        .beach-table {
+            border-collapse: separate !important;
+            border-spacing: 0 10px !important;
+        }
+
+        .beach-table thead th {
+            background: #f1fbfc !important;
+            color: #0077b6 !important;
+            border: none !important;
             font-weight: 800;
         }
 
@@ -122,6 +164,7 @@ $stockBrg = getData("SELECT * FROM tbl_barang");
 
         .beach-table tbody td {
             border-top: none;
+            border-top: none !important;
             vertical-align: middle;
             padding: 16px 14px;
         }
@@ -238,6 +281,40 @@ $stockBrg = getData("SELECT * FROM tbl_barang");
     </style>
 
     <div class="content-header">
+        .badge-stock {
+            background: #e8fff8;
+            color: #00a884;
+            padding: 7px 12px;
+            border-radius: 12px;
+            font-weight: 800;
+        }
+
+        .badge-minimal {
+            background: #fff7df;
+            color: #c58b00;
+            padding: 7px 12px;
+            border-radius: 12px;
+            font-weight: 800;
+        }
+
+        .status-cukup {
+            background: #e8fff8;
+            color: #00a884;
+            padding: 7px 12px;
+            border-radius: 12px;
+            font-weight: 800;
+        }
+
+        .status-kurang {
+            background: #ffe8e8;
+            color: #dc3545;
+            padding: 7px 12px;
+            border-radius: 12px;
+            font-weight: 800;
+        }
+    </style>
+
+    <div class="content-header beach-header">
         <div class="container-fluid">
             <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
@@ -251,12 +328,22 @@ $stockBrg = getData("SELECT * FROM tbl_barang");
                         </div>
                     </div>
                 </div>
+                            <i class="fas fa-warehouse"></i>
+                        </div>
+                        <div>
+                            <h1>Stock Barang</h1>
+                            <p>Monitoring stok barang lebih santai dengan nuansa pantai</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right beach-breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="<?= $main_url ?>dashboard.php">Home</a>
                         </li>
                         <li class="breadcrumb-item active">Laporan Stock</li>
+                        <li class="breadcrumb-item active">Stock</li>
                     </ol>
                 </div>
             </div>
@@ -274,6 +361,17 @@ $stockBrg = getData("SELECT * FROM tbl_barang");
                     <a href="<?= $main_url ?>report/r-stock.php"
                        class="btn btn-sm btn-cetak-beach float-right" target="_blank">
                         <i class="fas fa-print"></i> Cetak
+
+            <div class="card beach-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-boxes mr-2"></i> Stock
+                    </h3>
+
+                    <a href="<?= $main_url ?>report/r-stock.php"
+                        class="btn btn-sm btn-beach-print float-right"
+                        target="_blank">
+                        <i class="fas fa-print mr-1"></i> Cetak
                     </a>
                 </div>
 
@@ -318,10 +416,52 @@ $stockBrg = getData("SELECT * FROM tbl_barang");
                     </table>
                 </div>
 
+                                <th>Jumlah Stock</th>
+                                <th>Stock Minimal</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            foreach ($stockBrg as $stock) { ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><strong><?= $stock['id_barang'] ?></strong></td>
+                                    <td><?= $stock['nama_barang'] ?></td>
+                                    <td><?= $stock['satuan'] ?></td>
+                                    <td class="text-center">
+                                        <span class="badge-stock"><?= $stock['stock'] ?></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge-minimal"><?= $stock['stock_minimal'] ?></span>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        if ($stock['stock'] < $stock['stock_minimal']) {
+                                            echo '<span class="status-kurang">Stock Kurang</span>';
+                                        } else {
+                                            echo '<span class="status-cukup">Stock Cukup</span>';
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
+
         </div>
     </section>
 
 <?php require "../template/footer.php"; ?>
 
 </div>
+<?php
+
+require "../template/footer.php";
+
+?>

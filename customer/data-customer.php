@@ -58,6 +58,10 @@ if ($msg == 'aborted') {
             background:
                 radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
                 linear-gradient(135deg, #e0f7fa 0%, #fdf6e3 100%);
+        .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
+                linear-gradient(135deg, #e0f7fa 0%, #fdf6e3 100%) !important;
             min-height: 100vh;
         }
 
@@ -111,6 +115,18 @@ if ($msg == 'aborted') {
             color: #fff;
             padding: 20px 24px;
             border-bottom: none;
+            border: none !important;
+            border-radius: 24px !important;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,.08) !important;
+            background: rgba(255,255,255,.92) !important;
+        }
+
+        .beach-card .card-header {
+            background: linear-gradient(90deg, #00a884, #00bcd4) !important;
+            color: #fff !important;
+            padding: 20px 24px !important;
+            border-bottom: none !important;
         }
 
         .beach-card .card-title {
@@ -123,6 +139,10 @@ if ($msg == 'aborted') {
             color: #00a884;
             border: none;
             border-radius: 12px;
+            background: #ffffff !important;
+            color: #00a884 !important;
+            border: none !important;
+            border-radius: 12px !important;
             font-weight: 700;
             padding: 8px 15px;
             box-shadow: 0 8px 18px rgba(0,0,0,.12);
@@ -142,6 +162,19 @@ if ($msg == 'aborted') {
             background: #f1fbfc;
             color: #0077b6;
             border: none;
+            background: #e8fff8 !important;
+            color: #00796b !important;
+        }
+
+        .beach-table {
+            border-collapse: separate !important;
+            border-spacing: 0 10px !important;
+        }
+
+        .beach-table thead th {
+            background: #f1fbfc !important;
+            color: #0077b6 !important;
+            border: none !important;
             font-weight: 800;
         }
 
@@ -152,6 +185,7 @@ if ($msg == 'aborted') {
 
         .beach-table tbody td {
             border-top: none;
+            border-top: none !important;
             vertical-align: middle;
             padding: 16px 14px;
         }
@@ -169,11 +203,16 @@ if ($msg == 'aborted') {
             border: none;
             border-radius: 10px;
             color: #1f2d3d;
+            background: #ffc107 !important;
+            border: none !important;
+            border-radius: 10px !important;
+            color: #1f2d3d !important;
             padding: 7px 11px;
         }
 
         .btn-delete-beach {
             border-radius: 10px;
+            border-radius: 10px !important;
             padding: 7px 11px;
         }
 
@@ -264,12 +303,26 @@ if ($msg == 'aborted') {
                         <div class="beach-icon">
                             <i class="fas fa-users"></i>
                         </div>
+
+            <div class="row mb-2 align-items-center">
+
+                <div class="col-sm-6">
+                    <div class="beach-title-box">
+
+                        <div class="beach-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+
                         <div>
                             <h1>Customer</h1>
                             <p>Kelola data customer dengan tampilan pantai yang lebih santai</p>
                         </div>
                     </div>
                 </div>
+
+                    </div>
+                </div>
+
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right beach-breadcrumb">
                         <li class="breadcrumb-item">
@@ -279,6 +332,13 @@ if ($msg == 'aborted') {
                     </ol>
                 </div>
             </div>
+
+                        <li class="breadcrumb-item active">Data Customer</li>
+                    </ol>
+                </div>
+
+            </div>
+
         </div>
     </div>
 
@@ -288,18 +348,36 @@ if ($msg == 'aborted') {
 
                 <?php if ($alert != '') { echo $alert; } ?>
 
+            <div class="card beach-card">
+
+                <?php
+                if ($alert != '') {
+                    echo $alert;
+                }
+                ?>
+
                 <div class="card-header">
+
                     <h3 class="card-title">
                         <i class="fas fa-water mr-2"></i> Data Customer
                     </h3>
                     <a href="<?= $main_url ?>customer/add-customer.php"
                         class="btn btn-sm btn-add-beach float-right">
+
+                    <a href="<?= $main_url ?>customer/add-customer.php"
+                        class="btn btn-sm btn-add-beach float-right">
+
                         <i class="fas fa-plus fa-sm"></i> Add Customer
+
                     </a>
+
                 </div>
 
                 <div class="card-body table-responsive p-4">
                     <table class="table table-hover text-nowrap beach-table" id="tblData">
+
+                    <table class="table table-hover text-nowrap beach-table" id="tblData">
+
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -310,39 +388,71 @@ if ($msg == 'aborted') {
                                 <th style="width: 10%;">Operasi</th>
                             </tr>
                         </thead>
+
                         <tbody>
+
                             <?php
                             $no = 1;
                             $customers = getData("SELECT * FROM tbl_customer");
                             foreach ($customers as $customer): ?>
+
+                            foreach ($customers as $customer):
+                            ?>
+
                                 <tr>
                                     <td><?= $no++ ?></td>
                                     <td><strong><?= $customer['nama'] ?></strong></td>
-                                    <td><?= $customer['telpon'] ?></td>
-                                    <td><?= $customer['alamat'] ?></td>
-                                    <td><?= $customer['deskripsi'] ?></td>
+
                                     <td>
+                                        <strong><?= $customer['nama'] ?></strong>
+                                    </td>
+
+                                    <td><?= $customer['telpon'] ?></td>
+
+                                    <td><?= $customer['alamat'] ?></td>
+
+                                    <td><?= $customer['deskripsi'] ?></td>
+
+                                    <td>
+
                                         <a href="edit-customer.php?id=<?= $customer['id_customer'] ?>"
                                             class="btn btn-sm btn-edit-beach"
                                             title="edit customer">
                                             <i class="fas fa-pen"></i>
                                         </a>
+
+                                            <i class="fas fa-pen"></i>
+
+                                        </a>
+
                                         <a href="del-customer.php?id=<?= $customer['id_customer'] ?>"
                                             class="btn btn-sm btn-danger btn-delete-beach"
                                             title="hapus customer"
                                             onclick="return confirm('Anda Yakin ingin menghapus customer ini ?')">
+
                                             <i class="fas fa-trash"></i>
+
                                         </a>
+
                                     </td>
+
                                 </tr>
+
                             <?php endforeach; ?>
+
                         </tbody>
+
                     </table>
+
                 </div>
 
             </div>
+
         </div>
     </section>
 
 <?php require "../template/footer.php"; ?>
 </div>
+<?php
+require "../template/footer.php";
+?>

@@ -66,6 +66,10 @@ if ($msg == 'updated') {
             background:
                 radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
                 linear-gradient(135deg, #e0f7fa 0%, #fdf6e3 100%);
+        .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
+                linear-gradient(135deg, #e0f7fa 0%, #fdf6e3 100%) !important;
             min-height: 100vh;
         }
 
@@ -119,6 +123,18 @@ if ($msg == 'updated') {
             color: #fff;
             padding: 20px 24px;
             border-bottom: none;
+            border: none !important;
+            border-radius: 24px !important;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .08) !important;
+            background: rgba(255, 255, 255, .92) !important;
+        }
+
+        .beach-card .card-header {
+            background: linear-gradient(90deg, #00a884, #00bcd4) !important;
+            color: #fff !important;
+            padding: 20px 24px !important;
+            border-bottom: none !important;
         }
 
         .beach-card .card-title {
@@ -131,6 +147,10 @@ if ($msg == 'updated') {
             color: #00a884;
             border: none;
             border-radius: 12px;
+            background: #ffffff !important;
+            color: #00a884 !important;
+            border: none !important;
+            border-radius: 12px !important;
             font-weight: 700;
             padding: 8px 15px;
             box-shadow: 0 8px 18px rgba(0, 0, 0, .12);
@@ -145,6 +165,14 @@ if ($msg == 'updated') {
             background: #f1fbfc;
             color: #0077b6;
             border: none;
+            border-collapse: separate !important;
+            border-spacing: 0 10px !important;
+        }
+
+        .beach-table thead th {
+            background: #f1fbfc !important;
+            color: #0077b6 !important;
+            border: none !important;
             font-weight: 800;
         }
 
@@ -155,6 +183,7 @@ if ($msg == 'updated') {
 
         .beach-table tbody td {
             border-top: none;
+            border-top: none !important;
             vertical-align: middle;
             padding: 16px 14px;
         }
@@ -189,6 +218,8 @@ if ($msg == 'updated') {
         .btn-delete-beach {
             border: none;
             border-radius: 10px;
+            border: none !important;
+            border-radius: 10px !important;
             padding: 7px 11px;
         }
 
@@ -200,6 +231,13 @@ if ($msg == 'updated') {
         .btn-edit-beach {
             background: #ffc107;
             color: #1f2d3d;
+            background: #6c757d !important;
+            color: white !important;
+        }
+
+        .btn-edit-beach {
+            background: #ffc107 !important;
+            color: #1f2d3d !important;
         }
 
         .modal-content {
@@ -312,6 +350,7 @@ if ($msg == 'updated') {
         body.dark-mode .btn-add-beach {
             background: #1e3a4a !important;
             color: #48CAE4 !important;
+            border-radius: 12px !important;
         }
     </style>
 
@@ -329,6 +368,7 @@ if ($msg == 'updated') {
                         </div>
                     </div>
                 </div>
+
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right beach-breadcrumb">
                         <li class="breadcrumb-item">
@@ -346,11 +386,17 @@ if ($msg == 'updated') {
             <div class="card beach-card">
 
                 <?php if ($alert !== '') { echo $alert; } ?>
+                <?php
+                if ($alert !== '') {
+                    echo $alert;
+                }
+                ?>
 
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-water mr-2"></i> Data Barang
                     </h3>
+
                     <a href="<?= $main_url ?>barang/form-barang.php" class="btn btn-sm btn-add-beach float-right">
                         <i class="fas fa-plus fa-sm"></i> Add Barang
                     </a>
@@ -368,9 +414,11 @@ if ($msg == 'updated') {
                                 <th style="width: 15%;" class="text-center">Operasi</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <?php
                             $barang = getData("SELECT * FROM tbl_barang");
+
                             foreach ($barang as $brg) { ?>
                                 <tr>
                                     <td>
@@ -380,16 +428,23 @@ if ($msg == 'updated') {
                                     </td>
                                     <td><strong><?= $brg['id_barang'] ?></strong></td>
                                     <td><?= $brg['nama_barang'] ?></td>
+
+                                    <td><strong><?= $brg['id_barang'] ?></strong></td>
+
+                                    <td><?= $brg['nama_barang'] ?></td>
+
                                     <td>
                                         <span class="badge-price">
                                             Rp <?= number_format($brg['harga_beli'], 0, ',', '.') ?>
                                         </span>
                                     </td>
+
                                     <td>
                                         <span class="badge-price">
                                             Rp <?= number_format($brg['harga_jual'], 0, ',', '.') ?>
                                         </span>
                                     </td>
+
                                     <td class="text-center">
                                         <button type="button"
                                             class="btn btn-sm btn-barcode-beach"
@@ -399,11 +454,13 @@ if ($msg == 'updated') {
                                             title="cetak barcode">
                                             <i class="fas fa-barcode"></i>
                                         </button>
+
                                         <a href="form-barang.php?id=<?= $brg['id_barang'] ?>&msg=editing"
                                             class="btn btn-sm btn-edit-beach"
                                             title="edit barang">
                                             <i class="fas fa-pen"></i>
                                         </a>
+
                                         <a href="?id=<?= $brg['id_barang'] ?>&gbr=<?= $brg['gambar'] ?>&msg=deleted"
                                             class="btn btn-sm btn-danger btn-delete-beach"
                                             title="hapus barang"
@@ -414,6 +471,7 @@ if ($msg == 'updated') {
                                 </tr>
                             <?php } ?>
                         </tbody>
+
                     </table>
                 </div>
 
@@ -424,12 +482,14 @@ if ($msg == 'updated') {
     <div class="modal fade" id="mdlCetakBarcode">
         <div class="modal-dialog">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h4 class="modal-title">Cetak Barcode</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
                     <div class="form-group row">
                         <label for="nmBrg" class="col-sm-3 col-form-label">Nama Barang</label>
@@ -437,12 +497,14 @@ if ($msg == 'updated') {
                             <input type="text" class="form-control" id="nmBrg" readonly>
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <label for="barcode" class="col-sm-3 col-form-label">Barcode</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="barcode" readonly>
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <label for="jmlCetak" class="col-sm-3 col-form-label">Jumlah Cetak</label>
                         <div class="col-sm-9">
@@ -456,12 +518,18 @@ if ($msg == 'updated') {
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+
                     <button type="button" class="btn btn-primary" id="preview">
                         <i class="fas fa-print"></i> Cetak
                     </button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -470,8 +538,10 @@ if ($msg == 'updated') {
         $(document).ready(function() {
             $(document).on("click", "#btnCetakBarcode", function() {
                 $('#mdlCetakBarcode').modal('show');
+
                 let barcode = $(this).data('barcode');
                 let nama = $(this).data('nama');
+
                 $('#nmBrg').val(nama);
                 $('#barcode').val(barcode);
             });
@@ -479,6 +549,7 @@ if ($msg == 'updated') {
             $(document).on("click", "#preview", function() {
                 let barcode = $('#barcode').val();
                 let jmlCetak = $('#jmlCetak').val();
+
                 if (jmlCetak > 0 && jmlCetak <= 10) {
                     window.open("../report/r-barcode.php?barcode=" + barcode + "&jmlCetak=" + jmlCetak);
                 }
@@ -488,3 +559,8 @@ if ($msg == 'updated') {
 
 <?php require "../template/footer.php"; ?>
 </div>
+<?php
+
+require "../template/footer.php";
+
+?>

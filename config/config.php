@@ -1,19 +1,14 @@
 <?php
 
-date_default_timezone_set('Asia/Jakarta');
+$main_url = "http://localhost/WarTech/";
 
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$dbname = 'dbpos';
+$host = "127.0.0.1";
+$user = "root";
+$pass = "";
+$db   = "dbpos";
 
-$koneksi = mysqli_connect($host, $user, $pass, $dbname);
+$koneksi = mysqli_connect($host, $user, $pass, $db);
 
-// if (mysqli_connect_errno()) {
-//     echo "gagal koneksi ke database";
-//     exit();
-// } else {
-//     echo "berhasil koneksi ke database";
-// }
-
-$main_url = 'http://localhost/WarTech/';
+if (!$koneksi) {
+    die("Koneksi database gagal : " . mysqli_connect_error());
+}

@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 
 if (!isset($_SESSION["ssLoginPOS"])) {
@@ -12,35 +15,62 @@ require "config/functions.php";
 
 $title = "Dashboard";
 require "template/header.php";
+
 require "template/navbar.php";
 require "template/sidebar.php";
 
+
+// DATA DASHBOARD
+
+// USER
 $users = getData("SELECT * FROM tbl_user");
 $userNum = count($users);
 
+// SUPPLIER
 $suppliers = getData("SELECT * FROM tbl_supplier");
 $supplierNum = count($suppliers);
 
-$customers = getData("SELECT * FROM tbl_customer");
-$customerNum = count($customers);
+// CUSTOMER
+// sementara dibuat manual karena tabel belum ada
+$customerNum = 0;
 
+// BARANG
 $barang = getData("SELECT * FROM tbl_barang");
 $brgNum = count($barang);
 
 ?>
 
+<body>
+
 <style>
-  /* ===== BEACH THEME OVERRIDE ===== */
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+body{
+    background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 50%, #fff9e6 100%);
+    font-family: 'Nunito', sans-serif;
+    margin:0;
+    padding:0;
+}
+
+.container{
+    width:95%;
+    margin:auto;
+    padding-top:20px;
+}
 
   .content-wrapper {
     background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 50%, #fff9e6 100%);
     font-family: 'Nunito', sans-serif;
     min-height: 100vh;
   }
+.title{
+    font-size:32px;
+    font-weight:800;
+    color:#0077B6;
+    margin-bottom:20px;
+}
 
-  /* ===== WELCOME BANNER ===== */
-  .beach-banner {
+.banner{
     background: linear-gradient(135deg, #0077B6 0%, #00B4D8 60%, #48CAE4 100%);
     border-radius: 20px;
     padding: 28px 32px;
@@ -279,116 +309,209 @@ $brgNum = count($barang);
   body.dark-mode .empty-stock {
     color: #4a6278 !important;
   }
+    border-radius:20px;
+    padding:30px;
+    color:white;
+    margin-bottom:30px;
+}
+
+.banner h2{
+    margin:0;
+    font-size:30px;
+}
+
+.banner p{
+    margin-top:10px;
+}
+
+/* Mengubah nama dari .row menjadi .card-row agar tidak merusak Grid Bootstrap di bawah */
+.card-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.card{
+    flex:1;
+    min-width:220px;
+    padding:25px;
+    border-radius:20px;
+    color:white;
+    box-shadow:0 6px 20px rgba(0,0,0,0.15);
+}
+
+.card h3{
+    margin:0;
+    font-size:18px;
+}
+
+.card .number{
+    font-size:42px;
+    font-weight:800;
+    margin-top:15px;
+}
+
+.users{
+    background: linear-gradient(135deg, #FF8C00, #FFA940);
+}
+
+.supplier{
+    background: linear-gradient(135deg, #0096C7, #00B4D8);
+}
+
+.customer{
+    background: linear-gradient(135deg, #E63946, #FF6B6B);
+}
+
+.barang{
+    background: linear-gradient(135deg, #D4AC0D, #F4D03F);
+    color:#333;
+}
+
+/* Mengubah nama class agar tidak bertabrakan dengan AdminLTE */
+.dashboard-info-box{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    margin-top:20px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+    display: block !important;
+}
+
+.dashboard-info-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:20px;
+    color:#0077B6;
+    display: block !important;
+}
+
+.stock-item{
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+    display: block !important;
+}
+
+.omzet{
+    font-size:40px;
+    font-weight:800;
+    color:#0096C7;
+    margin-top:10px;
+    display: block !important;
+}
 </style>
 
-<!-- Content Wrapper -->
-<div class="content-wrapper">
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2 align-items-center">
-        <div class="col-sm-6">
-          <h1 class="beach-page-title m-0">Dashboard</h1>
+<div class="content-wrapper" style="background: transparent !important; padding-bottom: 40px;">
+
+    <div class="container">
+
+        <div class="title">
+            Dashboard
         </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="<?= $main_url ?>dashboard.php">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
-          </ol>
+
+        <div class="banner">
+            <h2>
+                Selamat Datang,
+                <?= htmlspecialchars(userLogin()['username']) ?>
+            </h2>
+
+            <p>
+                Semoga harimu menyenangkan seperti angin sepoi di tepi pantai 🌴
+            </p>
         </div>
-      </div>
+
+        <div class="card-row">
+
+            <div class="card users">
+                <h3>Total User</h3>
+                <div class="number">
+                    <?= $userNum ?>
+                </div>
+            </div>
+
+            <div class="card supplier">
+                <h3>Total Supplier</h3>
+                <div class="number">
+                    <?= $supplierNum ?>
+                </div>
+            </div>
+
+            <div class="card customer">
+                <h3>Total Customer</h3>
+                <div class="number">
+                    <?= $customerNum ?>
+                </div>
+            </div>
+
+            <div class="card barang">
+                <h3>Total Barang</h3>
+                <div class="number">
+                    <?= $brgNum ?>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            
+            <div class="col-md-6">
+                <div class="dashboard-info-box">
+
+                    <div class="dashboard-info-title">
+                        Info Stock Barang
+                    </div>
+
+                    <?php
+                    $allStock = getData("SELECT * FROM tbl_barang");
+
+                    if(count($allStock) > 0){
+
+                        foreach($allStock as $row){
+                            if($row['stock'] < $row['stock_minimal']){
+                                echo '
+                                <div class="stock-item">
+                                    '.$row['nama_barang'].' - <span style="color: #E63946; font-weight: bold;">Stock Kurang ⚠️</span>
+                                </div>
+                                ';
+                            } else {
+                                echo '
+                                <div class="stock-item">
+                                    '.$row['nama_barang'].' - <span style="color: #2a9d8f; font-weight: bold;">Stock Cukup ✅</span>
+                                </div>
+                                ';
+                            }
+                        }
+
+                    } else {
+                        echo '
+                        <div class="stock-item">
+                            Belum ada data barang 📦
+                        </div>
+                        ';
+                    }
+                    ?>
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="dashboard-info-box">
+
+                    <div class="dashboard-info-title">
+                        Omzet Penjualan
+                    </div>
+
+                    <div class="omzet">
+                        Rp <?= omzet() ?>
+                    </div>
+
+                </div>
+            </div>
+
+        </div> 
+
     </div>
-  </div>
 
-  <div class="content">
-    <div class="container-fluid">
-
-      <!-- Welcome Banner -->
-      <div class="beach-banner">
-        <div class="wave-icon">🌊</div>
-        <h2>Selamat Datang, <?= htmlspecialchars(userLogin()['username']) ?>!</h2>
-        <p>Semoga harimu menyenangkan seperti angin sepoi di tepi pantai 🌴</p>
-      </div>
-
-      <!-- Stat Boxes -->
-      <div class="row">
-        <div class="col-lg-3 col-6">
-          <a href="<?= $main_url ?>user" class="beach-stat-card card-users">
-            <div class="stat-label">Users</div>
-            <div class="stat-number"><?= $userNum ?></div>
-            <div class="stat-footer">More info &rarr;</div>
-            <div class="card-bg-icon"><i class="fas fa-users"></i></div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-6">
-          <a href="<?= $main_url ?>supplier" class="beach-stat-card card-supplier">
-            <div class="stat-label">Supplier</div>
-            <div class="stat-number"><?= $supplierNum ?></div>
-            <div class="stat-footer">More info &rarr;</div>
-            <div class="card-bg-icon"><i class="fas fa-truck"></i></div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-6">
-          <a href="<?= $main_url ?>customer" class="beach-stat-card card-customer">
-            <div class="stat-label">Customer</div>
-            <div class="stat-number"><?= $customerNum ?></div>
-            <div class="stat-footer">More info &rarr;</div>
-            <div class="card-bg-icon"><i class="fas fa-user-friends"></i></div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-6">
-          <a href="<?= $main_url ?>barang" class="beach-stat-card card-barang">
-            <div class="stat-label">Item Barang</div>
-            <div class="stat-number"><?= $brgNum ?></div>
-            <div class="stat-footer">More info &rarr;</div>
-            <div class="card-bg-icon"><i class="fas fa-boxes"></i></div>
-          </a>
-        </div>
-      </div>
-
-      <!-- Info Stock & Omzet -->
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="beach-card">
-            <div class="beach-card-header">
-              <span><i class="fas fa-exclamation-circle mr-2"></i>Info Stock Barang</span>
-              <a href="<?= $main_url ?>stock" title="Laporan Stock"><i class="fas fa-arrow-right"></i></a>
-            </div>
-            <table class="table mb-0">
-              <tbody>
-                <?php 
-                  $stockMin = getData("SELECT * FROM tbl_barang WHERE stock < stock_minimal");
-                  if (count($stockMin) > 0):
-                    foreach($stockMin as $min): ?>
-                    <tr>
-                      <td><?= htmlspecialchars($min['nama_barang']) ?></td>
-                      <td class="text-danger font-weight-bold">
-                        <i class="fas fa-exclamation-triangle mr-1"></i>Stock Kurang
-                      </td>
-                    </tr>
-                  <?php endforeach;
-                  else: ?>
-                    <tr><td colspan="2" class="empty-stock">✅ Semua stok aman</td></tr>
-                  <?php endif; ?>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="col-lg-6">
-          <div class="beach-card omzet-card">
-            <div class="beach-card-header">
-              <span><i class="fas fa-chart-line mr-2"></i>Omzet Penjualan</span>
-            </div>
-            <div class="omzet-value">
-              <span>Rp </span><?= omzet() ?>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <!-- /.content -->
-
-  <?php require "template/footer.php"; ?>
 </div>
+
+<?php require "template/footer.php"; ?>
