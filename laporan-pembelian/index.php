@@ -23,6 +23,14 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
 <div class="content-wrapper beach-page">
 
     <style>
+        /* ===== BEACH THEME - LAPORAN PEMBELIAN ===== */
+        .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
+                linear-gradient(135deg, #e0f7fa 0%, #fdf6e3 100%);
+            min-height: 100vh;
+        }
+
         .beach-page {
             background:
                 radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
@@ -72,6 +80,18 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
         }
 
         .beach-card {
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,.08);
+            background: rgba(255,255,255,.92);
+        }
+
+        .beach-card .card-header {
+            background: linear-gradient(90deg, #00a884, #00bcd4);
+            color: #fff;
+            padding: 20px 24px;
+            border-bottom: none;
             border: none !important;
             border-radius: 24px !important;
             overflow: hidden;
@@ -91,6 +111,11 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
             font-size: 18px;
         }
 
+        .btn-cetak-beach {
+            background: #ffffff;
+            color: #00a884;
+            border: none;
+            border-radius: 12px;
         .btn-beach-print {
             background: #ffffff !important;
             color: #00a884 !important;
@@ -101,6 +126,20 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
             box-shadow: 0 8px 18px rgba(0,0,0,.12);
         }
 
+        .btn-cetak-beach:hover {
+            background: #e8fff8;
+            color: #00796b;
+        }
+
+        .beach-table {
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .beach-table thead th {
+            background: #f1fbfc;
+            color: #0077b6;
+            border: none;
         .btn-beach-print:hover {
             background: #e8fff8 !important;
             color: #00796b !important;
@@ -124,6 +163,7 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
         }
 
         .beach-table tbody td {
+            border-top: none;
             border-top: none !important;
             vertical-align: middle;
             padding: 16px 14px;
@@ -137,6 +177,116 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
             border-radius: 0 14px 14px 0;
         }
 
+        .btn-detail-beach {
+            background: #17a2b8;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            padding: 7px 14px;
+            font-weight: 600;
+        }
+
+        .btn-detail-beach:hover {
+            background: #138496;
+            color: #fff;
+        }
+
+        /* ============================================================
+           DARK MODE OVERRIDES
+        ============================================================ */
+        body.dark-mode .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 100, 130, .25), transparent 35%),
+                linear-gradient(135deg, #0d1b2a 0%, #1a1a2e 100%) !important;
+        }
+
+        body.dark-mode .beach-title-box h1 {
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .beach-title-box p {
+            color: #90a4ae !important;
+        }
+
+        body.dark-mode .beach-breadcrumb {
+            background: rgba(30, 45, 61, 0.85) !important;
+            box-shadow: 0 8px 20px rgba(0,0,0,.3) !important;
+        }
+
+        body.dark-mode .beach-breadcrumb .breadcrumb-item a {
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .beach-breadcrumb .breadcrumb-item.active {
+            color: #90E0EF !important;
+        }
+
+        body.dark-mode .beach-card {
+            background: rgba(30, 45, 61, 0.95) !important;
+            box-shadow: 0 15px 35px rgba(0,0,0,.35) !important;
+        }
+
+        body.dark-mode .beach-card .card-header {
+            background: linear-gradient(90deg, #005f4e, #006a7a) !important;
+        }
+
+        body.dark-mode .beach-table thead th {
+            background: #1a2e3d !important;
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .beach-table tbody tr {
+            background: #1e2d3d !important;
+            box-shadow: 0 8px 18px rgba(0,0,0,.2) !important;
+        }
+
+        body.dark-mode .beach-table tbody td {
+            color: #cce7f0 !important;
+        }
+
+        body.dark-mode .beach-table tbody tr:hover td {
+            background: #253545 !important;
+        }
+
+        body.dark-mode .btn-cetak-beach {
+            background: #1e3a4a !important;
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .btn-cetak-beach:hover {
+            background: #253f52 !important;
+            color: #90E0EF !important;
+        }
+
+        body.dark-mode .modal-content {
+            background: #1e2d3d !important;
+            color: #cce7f0 !important;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom: 1px solid #2e4057 !important;
+        }
+
+        body.dark-mode .modal-footer {
+            border-top: 1px solid #2e4057 !important;
+        }
+
+        body.dark-mode .modal-title {
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .form-control {
+            background: #253545 !important;
+            border: 1px solid #2e4057 !important;
+            color: #cce7f0 !important;
+        }
+
+        body.dark-mode label {
+            color: #90E0EF !important;
+        }
+    </style>
+
+    <div class="content-header">
         .badge-total {
             background: #e8fff8;
             color: #00a884;
@@ -173,6 +323,14 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                 <div class="col-sm-6">
                     <div class="beach-title-box">
                         <div class="beach-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div>
+                            <h1>Laporan Pembelian</h1>
+                            <p>Rekap data pembelian dengan tampilan pantai yang lebih santai</p>
+                        </div>
+                    </div>
+                </div>
                             <i class="fas fa-umbrella-beach"></i>
                         </div>
                         <div>
@@ -187,6 +345,7 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                         <li class="breadcrumb-item">
                             <a href="<?= $main_url ?>dashboard.php">Home</a>
                         </li>
+                        <li class="breadcrumb-item active">Laporan Pembelian</li>
                         <li class="breadcrumb-item active">Pembelian</li>
                     </ol>
                 </div>
@@ -196,12 +355,17 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
 
     <section class="content">
         <div class="container-fluid">
+            <div class="card beach-card">
+
 
             <div class="card beach-card">
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-water mr-2"></i> Data Pembelian
                     </h3>
+                    <button type="button" class="btn btn-sm btn-cetak-beach float-right"
+                        data-toggle="modal" data-target="#mdlPeriodeBeli">
+                        <i class="fas fa-print"></i> Cetak
 
                     <button type="button" class="btn btn-sm btn-beach-print float-right"
                         data-toggle="modal" data-target="#mdlPeriodeBeli">
@@ -216,11 +380,16 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                                 <th>No</th>
                                 <th>No Pembelian</th>
                                 <th>Tgl Pembelian</th>
+                                <th>Supplier</th>
                                 <th>Suplier</th>
                                 <th>Total Pembelian</th>
                                 <th style="width: 15%;" class="text-center">Opsi</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            foreach ($pembelian as $beli): ?>
 
                         <tbody>
                             <?php
@@ -231,6 +400,7 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                                     <td><strong><?= $beli['no_beli'] ?></strong></td>
                                     <td><?= in_date($beli['tgl_beli']) ?></td>
                                     <td><?= $beli['suplier'] ?></td>
+                                    <td><?= number_format($beli['total'], 0, ",", ".") ?></td>
                                     <td>
                                         <span class="badge-total">
                                             Rp <?= number_format($beli['total'], 0, ",", ".") ?>
@@ -240,6 +410,15 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                                         <a href="detail-pembelian.php?id=<?= $beli['no_beli'] ?>&tgl=<?= in_date($beli['tgl_beli']) ?>"
                                             class="btn btn-sm btn-detail-beach"
                                             title="rincian barang">
+                                            <i class="fas fa-search mr-1"></i> Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
                                             Detail
                                         </a>
                                     </td>
@@ -254,6 +433,7 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
         </div>
     </section>
 
+    <!-- Modal Periode Cetak -->
     <div class="modal fade" id="mdlPeriodeBeli">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -266,6 +446,7 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
 
                 <div class="modal-body">
                     <div class="form-group row">
+                        <label for="tgl1" class="col-sm-3 col-form-label">Tanggal awal</label>
                         <label class="col-sm-3 col-form-label">Tanggal awal</label>
                         <div class="col-sm-9">
                             <input type="date" class="form-control" id="tgl1">
@@ -273,6 +454,7 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                     </div>
 
                     <div class="form-group row">
+                        <label for="tgl2" class="col-sm-3 col-form-label">Tanggal akhir</label>
                         <label class="col-sm-3 col-form-label">Tanggal akhir</label>
                         <div class="col-sm-9">
                             <input type="date" class="form-control" id="tgl2">
@@ -281,6 +463,8 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
                 </div>
 
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="printDoc()">
+                        <i class="fas fa-print"></i> Cetak
                     <button type="button" class="btn btn-detail-beach" onclick="printDoc()">
                         <i class="fas fa-print mr-1"></i> Cetak
                     </button>
@@ -301,8 +485,5 @@ $pembelian = getData("SELECT * FROM tbl_beli_head");
         }
     </script>
 
-<?php
-
-require "../template/footer.php";
-
-?>
+<?php require "../template/footer.php"; ?>
+</div>

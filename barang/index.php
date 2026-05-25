@@ -61,6 +61,11 @@ if ($msg == 'updated') {
 <div class="content-wrapper beach-page">
 
     <style>
+        /* ===== BEACH THEME - BARANG ===== */
+        .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
+                linear-gradient(135deg, #e0f7fa 0%, #fdf6e3 100%);
         .beach-page {
             background:
                 radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
@@ -106,6 +111,18 @@ if ($msg == 'updated') {
         }
 
         .beach-card {
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
+            background: rgba(255, 255, 255, .92);
+        }
+
+        .beach-card .card-header {
+            background: linear-gradient(90deg, #00a884, #00bcd4);
+            color: #fff;
+            padding: 20px 24px;
+            border-bottom: none;
             border: none !important;
             border-radius: 24px !important;
             overflow: hidden;
@@ -126,6 +143,10 @@ if ($msg == 'updated') {
         }
 
         .btn-add-beach {
+            background: #ffffff;
+            color: #00a884;
+            border: none;
+            border-radius: 12px;
             background: #ffffff !important;
             color: #00a884 !important;
             border: none !important;
@@ -136,6 +157,14 @@ if ($msg == 'updated') {
         }
 
         .beach-table {
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .beach-table thead th {
+            background: #f1fbfc;
+            color: #0077b6;
+            border: none;
             border-collapse: separate !important;
             border-spacing: 0 10px !important;
         }
@@ -153,6 +182,7 @@ if ($msg == 'updated') {
         }
 
         .beach-table tbody td {
+            border-top: none;
             border-top: none !important;
             vertical-align: middle;
             padding: 16px 14px;
@@ -186,12 +216,21 @@ if ($msg == 'updated') {
         .btn-barcode-beach,
         .btn-edit-beach,
         .btn-delete-beach {
+            border: none;
+            border-radius: 10px;
             border: none !important;
             border-radius: 10px !important;
             padding: 7px 11px;
         }
 
         .btn-barcode-beach {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-edit-beach {
+            background: #ffc107;
+            color: #1f2d3d;
             background: #6c757d !important;
             color: white !important;
         }
@@ -219,6 +258,98 @@ if ($msg == 'updated') {
         }
 
         .form-control {
+            border-radius: 12px;
+        }
+
+        /* ============================================================
+           DARK MODE OVERRIDES
+        ============================================================ */
+        body.dark-mode .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 100, 130, .25), transparent 35%),
+                linear-gradient(135deg, #0d1b2a 0%, #1a1a2e 100%) !important;
+        }
+
+        body.dark-mode .beach-title-box h1 {
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .beach-title-box p {
+            color: #90a4ae !important;
+        }
+
+        body.dark-mode .beach-breadcrumb {
+            background: rgba(30, 45, 61, 0.85) !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .3) !important;
+        }
+
+        body.dark-mode .beach-breadcrumb .breadcrumb-item a {
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .beach-breadcrumb .breadcrumb-item.active {
+            color: #90E0EF !important;
+        }
+
+        body.dark-mode .beach-card {
+            background: rgba(30, 45, 61, 0.95) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .35) !important;
+        }
+
+        body.dark-mode .beach-card .card-header {
+            background: linear-gradient(90deg, #005f4e, #006a7a) !important;
+        }
+
+        body.dark-mode .beach-table thead th {
+            background: #1a2e3d !important;
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .beach-table tbody tr {
+            background: #1e2d3d !important;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, .2) !important;
+        }
+
+        body.dark-mode .beach-table tbody td {
+            color: #cce7f0 !important;
+        }
+
+        body.dark-mode .beach-table tbody tr:hover td {
+            background: #253545 !important;
+        }
+
+        body.dark-mode .badge-price {
+            background: #0d2e26 !important;
+            color: #2ECC71 !important;
+        }
+
+        body.dark-mode .img-barang-beach {
+            background: #1e2d3d !important;
+            box-shadow: 0 8px 18px rgba(0,0,0,.3) !important;
+        }
+
+        body.dark-mode .modal-content {
+            background: #1e2d3d !important;
+            color: #cce7f0 !important;
+        }
+
+        body.dark-mode .modal-body .col-form-label {
+            color: #90E0EF !important;
+        }
+
+        body.dark-mode .modal-body .form-control {
+            background: #253545 !important;
+            border-color: #2a3f52 !important;
+            color: #cce7f0 !important;
+        }
+
+        body.dark-mode .modal-footer {
+            border-top-color: #2a3f52 !important;
+        }
+
+        body.dark-mode .btn-add-beach {
+            background: #1e3a4a !important;
+            color: #48CAE4 !important;
             border-radius: 12px !important;
         }
     </style>
@@ -254,6 +385,7 @@ if ($msg == 'updated') {
         <div class="container-fluid">
             <div class="card beach-card">
 
+                <?php if ($alert !== '') { echo $alert; } ?>
                 <?php
                 if ($alert !== '') {
                     echo $alert;
@@ -294,6 +426,8 @@ if ($msg == 'updated') {
                                             alt="gambar barang"
                                             class="img-barang-beach">
                                     </td>
+                                    <td><strong><?= $brg['id_barang'] ?></strong></td>
+                                    <td><?= $brg['nama_barang'] ?></td>
 
                                     <td><strong><?= $brg['id_barang'] ?></strong></td>
 
@@ -386,6 +520,7 @@ if ($msg == 'updated') {
                 </div>
 
                 <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Close
                     </button>
@@ -422,6 +557,8 @@ if ($msg == 'updated') {
         });
     </script>
 
+<?php require "../template/footer.php"; ?>
+</div>
 <?php
 
 require "../template/footer.php";

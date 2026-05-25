@@ -4,17 +4,17 @@
    ============================================ */
 
 (function () {
-    var redirectUrl   = 'dashboard.php';
-    var totalDuration = 3000;
+    let redirectUrl   = 'dashboard.php';
+    let totalDuration = 3000;
 
-    var loaderFill     = document.getElementById('loaderFill');
-    var loaderText     = document.getElementById('loaderText');
-    var percentText    = document.getElementById('percentText');
-    var successOverlay = document.getElementById('successOverlay');
+    let loaderFill     = document.getElementById('loaderFill');
+    let loaderText     = document.getElementById('loaderText');
+    let percentText    = document.getElementById('percentText');
+    let successOverlay = document.getElementById('successOverlay');
 
     if (!loaderFill || !successOverlay) return;
 
-    var messages = [
+    let messages = [
         { pct: 0,   text: 'Memuat konfigurasi...' },
         { pct: 30,  text: 'Menghubungkan database...' },
         { pct: 55,  text: 'Menyiapkan data produk...' },
@@ -23,15 +23,15 @@
         { pct: 100, text: 'Siap!' },
     ];
 
-    var startTime = null;
+    let startTime = null;
 
     function easeOutCubic(t) {
         return 1 - Math.pow(1 - t, 3);
     }
 
     function updateMessage(pct) {
-        var current = messages[0].text;
-        for (var i = 0; i < messages.length; i++) {
+        let current = messages[0].text;
+        for (let i = 0; i < messages.length; i++) {
             if (pct >= messages[i].pct) current = messages[i].text;
         }
         if (loaderText.textContent !== current) {
@@ -45,10 +45,10 @@
 
     function animate(timestamp) {
         if (!startTime) startTime = timestamp;
-        var elapsed  = timestamp - startTime;
-        var progress = Math.min(elapsed / totalDuration, 1);
-        var eased    = easeOutCubic(progress);
-        var pct      = Math.round(eased * 100);
+        let elapsed  = timestamp - startTime;
+        let progress = Math.min(elapsed / totalDuration, 1);
+        let eased    = easeOutCubic(progress);
+        let pct      = Math.round(eased * 100);
 
         loaderFill.style.width  = pct + '%';
         percentText.textContent = pct + '%';

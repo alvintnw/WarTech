@@ -53,6 +53,11 @@ if ($msg == 'aborted') {
 <div class="content-wrapper beach-page">
 
     <style>
+        /* ===== BEACH THEME - CUSTOMER ===== */
+        .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
+                linear-gradient(135deg, #e0f7fa 0%, #fdf6e3 100%);
         .beach-page {
             background:
                 radial-gradient(circle at top left, rgba(0, 188, 212, .18), transparent 35%),
@@ -98,6 +103,18 @@ if ($msg == 'aborted') {
         }
 
         .beach-card {
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,.08);
+            background: rgba(255,255,255,.92);
+        }
+
+        .beach-card .card-header {
+            background: linear-gradient(90deg, #00a884, #00bcd4);
+            color: #fff;
+            padding: 20px 24px;
+            border-bottom: none;
             border: none !important;
             border-radius: 24px !important;
             overflow: hidden;
@@ -118,6 +135,10 @@ if ($msg == 'aborted') {
         }
 
         .btn-add-beach {
+            background: #ffffff;
+            color: #00a884;
+            border: none;
+            border-radius: 12px;
             background: #ffffff !important;
             color: #00a884 !important;
             border: none !important;
@@ -128,6 +149,19 @@ if ($msg == 'aborted') {
         }
 
         .btn-add-beach:hover {
+            background: #e8fff8;
+            color: #00796b;
+        }
+
+        .beach-table {
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .beach-table thead th {
+            background: #f1fbfc;
+            color: #0077b6;
+            border: none;
             background: #e8fff8 !important;
             color: #00796b !important;
         }
@@ -150,6 +184,7 @@ if ($msg == 'aborted') {
         }
 
         .beach-table tbody td {
+            border-top: none;
             border-top: none !important;
             vertical-align: middle;
             padding: 16px 14px;
@@ -164,6 +199,10 @@ if ($msg == 'aborted') {
         }
 
         .btn-edit-beach {
+            background: #ffc107;
+            border: none;
+            border-radius: 10px;
+            color: #1f2d3d;
             background: #ffc107 !important;
             border: none !important;
             border-radius: 10px !important;
@@ -172,6 +211,7 @@ if ($msg == 'aborted') {
         }
 
         .btn-delete-beach {
+            border-radius: 10px;
             border-radius: 10px !important;
             padding: 7px 11px;
         }
@@ -181,10 +221,88 @@ if ($msg == 'aborted') {
             border-radius: 16px;
             border: none;
         }
+
+        /* ============================================================
+           DARK MODE OVERRIDES
+        ============================================================ */
+        body.dark-mode .beach-page {
+            background:
+                radial-gradient(circle at top left, rgba(0, 100, 130, .25), transparent 35%),
+                linear-gradient(135deg, #0d1b2a 0%, #1a1a2e 100%) !important;
+        }
+
+        body.dark-mode .beach-title-box h1 {
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .beach-title-box p {
+            color: #90a4ae !important;
+        }
+
+        body.dark-mode .beach-breadcrumb {
+            background: rgba(30, 45, 61, 0.85) !important;
+            box-shadow: 0 8px 20px rgba(0,0,0,.3) !important;
+        }
+
+        body.dark-mode .beach-breadcrumb .breadcrumb-item a {
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .beach-breadcrumb .breadcrumb-item.active {
+            color: #90E0EF !important;
+        }
+
+        body.dark-mode .beach-card {
+            background: rgba(30, 45, 61, 0.95) !important;
+            box-shadow: 0 15px 35px rgba(0,0,0,.35) !important;
+        }
+
+        body.dark-mode .beach-card .card-header {
+            background: linear-gradient(90deg, #005f4e, #006a7a) !important;
+        }
+
+        body.dark-mode .beach-table thead th {
+            background: #1a2e3d !important;
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .beach-table tbody tr {
+            background: #1e2d3d !important;
+            box-shadow: 0 8px 18px rgba(0,0,0,.2) !important;
+        }
+
+        body.dark-mode .beach-table tbody td {
+            color: #cce7f0 !important;
+        }
+
+        body.dark-mode .beach-table tbody tr:hover td {
+            background: #253545 !important;
+        }
+
+        body.dark-mode .btn-add-beach {
+            background: #1e3a4a !important;
+            color: #48CAE4 !important;
+        }
+
+        body.dark-mode .btn-add-beach:hover {
+            background: #253f52 !important;
+            color: #90E0EF !important;
+        }
+
+        body.dark-mode .beach-alert {
+            background: rgba(30, 45, 61, 0.95) !important;
+            color: #cce7f0 !important;
+        }
     </style>
 
     <div class="content-header">
         <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <div class="beach-title-box">
+                        <div class="beach-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
 
             <div class="row mb-2 align-items-center">
 
@@ -199,6 +317,8 @@ if ($msg == 'aborted') {
                             <h1>Customer</h1>
                             <p>Kelola data customer dengan tampilan pantai yang lebih santai</p>
                         </div>
+                    </div>
+                </div>
 
                     </div>
                 </div>
@@ -208,6 +328,10 @@ if ($msg == 'aborted') {
                         <li class="breadcrumb-item">
                             <a href="<?= $main_url ?>dashboard.php">Home</a>
                         </li>
+                        <li class="breadcrumb-item active">Data Customer</li>
+                    </ol>
+                </div>
+            </div>
 
                         <li class="breadcrumb-item active">Data Customer</li>
                     </ol>
@@ -220,6 +344,9 @@ if ($msg == 'aborted') {
 
     <section>
         <div class="container-fluid">
+            <div class="card beach-card">
+
+                <?php if ($alert != '') { echo $alert; } ?>
 
             <div class="card beach-card">
 
@@ -234,6 +361,8 @@ if ($msg == 'aborted') {
                     <h3 class="card-title">
                         <i class="fas fa-water mr-2"></i> Data Customer
                     </h3>
+                    <a href="<?= $main_url ?>customer/add-customer.php"
+                        class="btn btn-sm btn-add-beach float-right">
 
                     <a href="<?= $main_url ?>customer/add-customer.php"
                         class="btn btn-sm btn-add-beach float-right">
@@ -245,6 +374,7 @@ if ($msg == 'aborted') {
                 </div>
 
                 <div class="card-body table-responsive p-4">
+                    <table class="table table-hover text-nowrap beach-table" id="tblData">
 
                     <table class="table table-hover text-nowrap beach-table" id="tblData">
 
@@ -263,15 +393,15 @@ if ($msg == 'aborted') {
 
                             <?php
                             $no = 1;
-
                             $customers = getData("SELECT * FROM tbl_customer");
+                            foreach ($customers as $customer): ?>
 
                             foreach ($customers as $customer):
                             ?>
 
                                 <tr>
-
                                     <td><?= $no++ ?></td>
+                                    <td><strong><?= $customer['nama'] ?></strong></td>
 
                                     <td>
                                         <strong><?= $customer['nama'] ?></strong>
@@ -288,6 +418,8 @@ if ($msg == 'aborted') {
                                         <a href="edit-customer.php?id=<?= $customer['id_customer'] ?>"
                                             class="btn btn-sm btn-edit-beach"
                                             title="edit customer">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
 
                                             <i class="fas fa-pen"></i>
 
@@ -319,6 +451,8 @@ if ($msg == 'aborted') {
         </div>
     </section>
 
+<?php require "../template/footer.php"; ?>
+</div>
 <?php
 require "../template/footer.php";
 ?>
