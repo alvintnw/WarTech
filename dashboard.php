@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 
 if (!isset($_SESSION["ssLoginPOS"])) {
@@ -12,307 +15,243 @@ require "config/functions.php";
 
 $title = "Dashboard";
 require "template/header.php";
+
+// sementara dimatikan dulu agar tidak error
 require "template/navbar.php";
 require "template/sidebar.php";
 
+
+
+// ======================
+// DATA DASHBOARD
+// ======================
+
+// USER
 $users = getData("SELECT * FROM tbl_user");
 $userNum = count($users);
 
+// SUPPLIER
 $suppliers = getData("SELECT * FROM tbl_supplier");
 $supplierNum = count($suppliers);
 
-$customers = getData("SELECT * FROM tbl_customer");
-$customerNum = count($customers);
+// CUSTOMER
+// sementara dibuat manual karena tabel belum ada
+$customerNum = 0;
 
+// BARANG
 $barang = getData("SELECT * FROM tbl_barang");
 $brgNum = count($barang);
 
 ?>
 
+<body>
+
 <style>
-  /* ===== BEACH THEME OVERRIDE ===== */
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
-  .content-wrapper {
-    background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 50%, #fff9e6 100%) !important;
-    font-family: 'Nunito', sans-serif !important;
-    min-height: 100vh;
-  }
+body{
+    background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 50%, #fff9e6 100%);
+    font-family: 'Nunito', sans-serif;
+    margin:0;
+    padding:0;
+}
 
-  /* ===== WELCOME BANNER ===== */
-  .beach-banner {
+.container{
+    width:90%;
+    margin:auto;
+    padding-top:40px;
+}
+
+.title{
+    font-size:32px;
+    font-weight:800;
+    color:#0077B6;
+    margin-bottom:20px;
+}
+
+.banner{
     background: linear-gradient(135deg, #0077B6 0%, #00B4D8 60%, #48CAE4 100%);
-    border-radius: 20px;
-    padding: 28px 32px;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 24px;
-    box-shadow: 0 8px 32px rgba(0, 180, 216, 0.3);
-  }
-  .beach-banner::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 200px; height: 200px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 50%;
-  }
-  .beach-banner::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; right: 80px;
-    width: 280px; height: 280px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 50%;
-  }
-  .beach-banner h2 {
-    font-size: 1.8rem;
-    font-weight: 800;
-    margin: 0 0 6px;
-  }
-  .beach-banner p {
-    margin: 0;
-    opacity: 0.85;
-    font-size: 0.95rem;
-  }
-  .beach-banner .wave-icon {
-    position: absolute;
-    right: 32px; top: 50%;
-    transform: translateY(-50%);
-    font-size: 5rem;
-    opacity: 0.18;
-  }
+    border-radius:20px;
+    padding:30px;
+    color:white;
+    margin-bottom:30px;
+}
 
-  /* ===== STAT BOXES ===== */
-  .beach-stat-card {
-    border-radius: 18px;
-    padding: 22px 20px;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: block;
-    text-decoration: none !important;
-    margin-bottom: 20px;
-  }
-  .beach-stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-    color: #fff;
-  }
-  .beach-stat-card .card-bg-icon {
-    position: absolute;
-    right: -10px; bottom: -10px;
-    font-size: 5rem;
-    opacity: 0.15;
-  }
-  .beach-stat-card .stat-label {
-    font-size: 0.82rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.85;
-    margin-bottom: 4px;
-  }
-  .beach-stat-card .stat-number {
-    font-size: 2.6rem;
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 12px;
-  }
-  .beach-stat-card .stat-footer {
-    font-size: 0.8rem;
-    opacity: 0.8;
-    border-top: 1px solid rgba(255,255,255,0.25);
-    padding-top: 10px;
-    margin-top: 4px;
-  }
+.banner h2{
+    margin:0;
+    font-size:30px;
+}
 
-  /* Box Colors */
-  .card-users    { background: linear-gradient(135deg, #FF8C00, #FFA940); }
-  .card-supplier { background: linear-gradient(135deg, #0096C7, #00B4D8); }
-  .card-customer { background: linear-gradient(135deg, #E63946, #FF6B6B); }
-  .card-barang   { background: linear-gradient(135deg, #D4AC0D, #F4D03F); color: #333 !important; }
-  .card-barang:hover { color: #333 !important; }
-  .card-barang .stat-footer { border-top-color: rgba(0,0,0,0.15); }
+.banner p{
+    margin-top:10px;
+}
 
-  /* ===== INFO CARDS (Stock & Omzet) ===== */
-  .beach-card {
-    border-radius: 18px;
-    background: #fff;
-    box-shadow: 0 4px 20px rgba(0, 150, 199, 0.10);
-    border: none;
-    overflow: hidden;
-    margin-bottom: 24px;
-  }
-  .beach-card .beach-card-header {
-    background: linear-gradient(90deg, #0096C7, #48CAE4);
-    color: #fff;
-    padding: 14px 20px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .beach-card .beach-card-header a {
-    color: rgba(255,255,255,0.85);
-    font-size: 1rem;
-  }
-  .beach-card .beach-card-header a:hover { color: #fff; }
+.row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+}
 
-  .beach-card table { margin: 0; }
-  .beach-card table td {
-    padding: 12px 20px;
-    border-bottom: 1px solid #f0f9fc;
-    font-size: 0.88rem;
-  }
-  .beach-card table tr:last-child td { border-bottom: none; }
-  .beach-card table tr:hover td { background: #f0f9fc; }
+.card{
+    flex:1;
+    min-width:220px;
+    padding:25px;
+    border-radius:20px;
+    color:white;
+    box-shadow:0 6px 20px rgba(0,0,0,0.15);
+}
 
-  /* Omzet card */
-  .omzet-card .beach-card-header {
-    background: linear-gradient(90deg, #27AE60, #2ECC71);
-  }
-  .omzet-value {
-    padding: 28px 24px;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #0096C7;
-  }
-  .omzet-value span { font-size: 1rem; font-weight: 600; color: #48CAE4; }
+.card h3{
+    margin:0;
+    font-size:18px;
+}
 
-  /* ===== PAGE TITLE ===== */
-  .beach-page-title {
-    font-weight: 800;
-    font-size: 1.5rem;
-    color: #0077B6;
-    margin-bottom: 4px;
-  }
-  .breadcrumb { background: transparent !important; padding: 0 !important; }
-  .breadcrumb-item a { color: #00B4D8 !important; }
-  .breadcrumb-item.active { color: #0077B6 !important; }
-  .breadcrumb-item + .breadcrumb-item::before { color: #90E0EF; }
+.card .number{
+    font-size:42px;
+    font-weight:800;
+    margin-top:15px;
+}
 
-  /* ===== EMPTY STATE ===== */
-  .empty-stock {
-    padding: 24px;
-    text-align: center;
-    color: #b0c4cb;
-    font-size: 0.9rem;
-  }
+.users{
+    background: linear-gradient(135deg, #FF8C00, #FFA940);
+}
+
+.supplier{
+    background: linear-gradient(135deg, #0096C7, #00B4D8);
+}
+
+.customer{
+    background: linear-gradient(135deg, #E63946, #FF6B6B);
+}
+
+.barang{
+    background: linear-gradient(135deg, #D4AC0D, #F4D03F);
+    color:#333;
+}
+
+.info-box{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    margin-top:30px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+.info-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:20px;
+    color:#0077B6;
+}
+
+.stock-item{
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.omzet{
+    font-size:40px;
+    font-weight:800;
+    color:#0096C7;
+}
 </style>
 
-<!-- Content Wrapper -->
-<div class="content-wrapper">
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2 align-items-center">
-        <div class="col-sm-6">
-          <h1 class="beach-page-title m-0">Dashboard</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="<?= $main_url ?>dashboard.php">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
-          </ol>
-        </div>
-      </div>
+<div class="container">
+
+    <div class="title">
+        Dashboard
     </div>
-  </div>
 
-  <div class="content">
-    <div class="container-fluid">
+    <div class="banner">
+        <h2>
+            Selamat Datang,
+            <?= htmlspecialchars(userLogin()['username']) ?>
+        </h2>
 
-      <!-- Welcome Banner -->
-      <div class="beach-banner">
-        <div class="wave-icon">🌊</div>
-        <h2>Selamat Datang, <?= htmlspecialchars(userLogin()['username']) ?>!</h2>
-        <p>Semoga harimu menyenangkan seperti angin sepoi di tepi pantai 🌴</p>
-      </div>
+        <p>
+            Semoga harimu menyenangkan seperti angin sepoi di tepi pantai 🌴
+        </p>
+    </div>
 
-      <!-- Stat Boxes -->
-      <div class="row">
-        <div class="col-lg-3 col-6">
-          <a href="<?= $main_url ?>user" class="beach-stat-card card-users">
-            <div class="stat-label">Users</div>
-            <div class="stat-number"><?= $userNum ?></div>
-            <div class="stat-footer">More info &rarr;</div>
-            <div class="card-bg-icon"><i class="fas fa-users"></i></div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-6">
-          <a href="<?= $main_url ?>supplier" class="beach-stat-card card-supplier">
-            <div class="stat-label">Supplier</div>
-            <div class="stat-number"><?= $supplierNum ?></div>
-            <div class="stat-footer">More info &rarr;</div>
-            <div class="card-bg-icon"><i class="fas fa-truck"></i></div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-6">
-          <a href="<?= $main_url ?>customer" class="beach-stat-card card-customer">
-            <div class="stat-label">Customer</div>
-            <div class="stat-number"><?= $customerNum ?></div>
-            <div class="stat-footer">More info &rarr;</div>
-            <div class="card-bg-icon"><i class="fas fa-user-friends"></i></div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-6">
-          <a href="<?= $main_url ?>barang" class="beach-stat-card card-barang">
-            <div class="stat-label">Item Barang</div>
-            <div class="stat-number"><?= $brgNum ?></div>
-            <div class="stat-footer">More info &rarr;</div>
-            <div class="card-bg-icon"><i class="fas fa-boxes"></i></div>
-          </a>
-        </div>
-      </div>
+    <div class="row">
 
-      <!-- Info Stock & Omzet -->
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="beach-card">
-            <div class="beach-card-header">
-              <span><i class="fas fa-exclamation-circle mr-2"></i>Info Stock Barang</span>
-              <a href="<?= $main_url ?>stock" title="Laporan Stock"><i class="fas fa-arrow-right"></i></a>
+        <div class="card users">
+            <h3>Total User</h3>
+            <div class="number">
+                <?= $userNum ?>
             </div>
-            <table class="table mb-0">
-              <tbody>
-                <?php 
-                  $stockMin = getData("SELECT * FROM tbl_barang WHERE stock < stock_minimal");
-                  if (count($stockMin) > 0):
-                    foreach($stockMin as $min): ?>
-                    <tr>
-                      <td><?= htmlspecialchars($min['nama_barang']) ?></td>
-                      <td class="text-danger font-weight-bold">
-                        <i class="fas fa-exclamation-triangle mr-1"></i>Stock Kurang
-                      </td>
-                    </tr>
-                  <?php endforeach;
-                  else: ?>
-                    <tr><td colspan="2" class="empty-stock">✅ Semua stok aman</td></tr>
-                  <?php endif; ?>
-              </tbody>
-            </table>
-          </div>
         </div>
 
-        <div class="col-lg-6">
-          <div class="beach-card omzet-card">
-            <div class="beach-card-header">
-              <span><i class="fas fa-chart-line mr-2"></i>Omzet Penjualan</span>
+        <div class="card supplier">
+            <h3>Total Supplier</h3>
+            <div class="number">
+                <?= $supplierNum ?>
             </div>
-            <div class="omzet-value">
-              <span>Rp </span><?= omzet() ?>
-            </div>
-          </div>
         </div>
-      </div>
+
+        <div class="card customer">
+            <h3>Total Customer</h3>
+            <div class="number">
+                <?= $customerNum ?>
+            </div>
+        </div>
+
+        <div class="card barang">
+            <h3>Total Barang</h3>
+            <div class="number">
+                <?= $brgNum ?>
+            </div>
+        </div>
 
     </div>
-  </div>
-  <!-- /.content -->
 
-  <?php require "template/footer.php"; ?>
+    <div class="info-box">
+
+        <div class="info-title">
+            Info Stock Barang
+        </div>
+
+        <?php
+
+        $stockMin = getData("SELECT * FROM tbl_barang WHERE stock < stock_minimal");
+
+        if(count($stockMin) > 0){
+
+            foreach($stockMin as $min){
+
+                echo '
+                <div class="stock-item">
+                    '.$min['nama_barang'].' - Stock Kurang
+                </div>
+                ';
+            }
+
+        } else {
+
+            echo '
+            <div class="stock-item">
+                Semua stok aman ✅
+            </div>
+            ';
+        }
+
+        ?>
+
+    </div>
+
+    <div class="info-box">
+
+        <div class="info-title">
+            Omzet Penjualan
+        </div>
+
+        <div class="omzet">
+            Rp <?= omzet() ?>
+        </div>
+
+    </div>
+
 </div>
+
+</body>
+</html>

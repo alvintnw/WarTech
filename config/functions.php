@@ -3,48 +3,57 @@
 function uploadimg($url = null, $name = null)
 {
     $namafile = $_FILES['image']['name'];
-    $ukuran = $_FILES['image']['size'];
-    $tmp = $_FILES['image']['tmp_name'];
+    $ukuran   = $_FILES['image']['size'];
+    $tmp      = $_FILES['image']['tmp_name'];
 
-    // validasi file gambar yg boleh diupload
+    // Validasi ekstensi gambar
     $ekstensiGambarValid = ['jpg', 'jpeg', 'png', 'gif'];
     $ekstensiGambar = explode('.', $namafile);
     $ekstensiGambar = strtolower(end($ekstensiGambar));
 
     if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
+
         if ($url != null) {
+
             echo '<script>
-                alert("file yang anda upload bukan gambar, Data gagal diupdate !");
-                document.location.href = "' . $url . '";
-              </script>';
+                    alert("File yang anda upload bukan gambar!");
+                    document.location.href="' . $url . '";
+                  </script>';
             die();
+
         } else {
+
             echo '<script>
-                alert("file yang anda upload bukan gambar, Data gagal ditambahkan !");
-              </script>';
+                    alert("File yang anda upload bukan gambar!");
+                  </script>';
             return false;
         }
     }
 
-    // validasi ukuran gambar max 1 MB
+    // Validasi ukuran max 1MB
     if ($ukuran > 1000000) {
+
         if ($url != null) {
+
             echo '<script>
-            alert("Ukuran gambar melebihi 1 MB, Data gagal diupdate !");
-            document.location.href = "' . $url . '";
-          </script>';
+                    alert("Ukuran gambar melebihi 1 MB!");
+                    document.location.href="' . $url . '";
+                  </script>';
             die();
+
         } else {
+
             echo '<script>
-            alert("Ukuran gambar tidak boleh melebihi 1 MB");
-          </script>';
+                    alert("Ukuran gambar tidak boleh melebihi 1 MB!");
+                  </script>';
             return false;
         }
     }
 
+    // Nama file baru
     if ($name != null) {
         $namaFileBaru = $name . '.' . $ekstensiGambar;
-    } else  {
+    } else {
         $namaFileBaru = rand(10, 1000) . '-' . $namafile;
     }
 
@@ -52,11 +61,20 @@ function uploadimg($url = null, $name = null)
 
     return $namaFileBaru;
 }
+
+
+
 function getData($sql)
 {
     global $koneksi;
 
     $result = mysqli_query($koneksi, $sql);
+
+    // Cek error query
+    if (!$result) {
+        die("Query Error : " . mysqli_error($koneksi));
+    }
+
     $rows = [];
 
     while ($row = mysqli_fetch_assoc($result)) {
@@ -66,173 +84,153 @@ function getData($sql)
     return $rows;
 }
 
+
+
 function userLogin()
 {
+    global $koneksi;
+
+    if (!isset($_SESSION["ssUserPOS"])) {
+        return null;
+    }
+
     $userActive = $_SESSION["ssUserPOS"];
 
-    $dataUser = getData("SELECT * FROM tbl_user WHERE username = '$userActive'")[0];
+    $dataUser = getData("SELECT * FROM tbl_user WHERE username = '$userActive'");
 
-    return $dataUser;
+    return isset($dataUser[0]) ? $dataUser[0] : null;
 }
+
+
 
 function userMenu()
 {
     $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-    $uri_segments = explode('/', $uri_path);
+    $uri_segments = explode('/', trim($uri_path, '/'));
 
-    $menu = $uri_segments[2];
-
-    return $menu;
+    return isset($uri_segments[1]) ? $uri_segments[1] : '';
 }
+
+
 
 function menuHome()
 {
-    if (userMenu() == 'dashboard.php') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'dashboard.php' ? 'active' : null;
 }
+
+
 
 function menuMaster()
 {
-    if (userMenu() == 'supplier'or UserMenu() == 'customer' or userMenu() == 'barang') {
-        $result = 'menu-is-opening menu-open';
-    } else {
-        $result = null;
+    if (
+        userMenu() == 'supplier' ||
+        userMenu() == 'customer' ||
+        userMenu() == 'barang'
+    ) {
+        return 'menu-is-opening menu-open';
     }
 
-    return $result;
+    return null;
 }
+
+
+
 function menuSetting()
 {
-    if (userMenu() == 'user') {
-        $result = 'menu-is-opening menu-open';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'user' ? 'menu-is-opening menu-open' : null;
 }
+
+
 
 function menuUser()
 {
-    if (userMenu() == 'user') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'user' ? 'active' : null;
 }
+
+
 
 function menuSupplier()
 {
-    if (userMenu() == 'supplier') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'supplier' ? 'active' : null;
 }
+
+
 
 function menuBarang()
 {
-    if (userMenu() == 'barang') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'barang' ? 'active' : null;
 }
+
+
 
 function menuBeli()
 {
-    if (userMenu() == 'pembelian') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'pembelian' ? 'active' : null;
 }
+
+
 
 function menuJual()
 {
-    if (userMenu() == 'penjualan') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'penjualan' ? 'active' : null;
 }
 
 
 
 function laporanStock()
 {
-    if (userMenu() == 'stock') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'stock' ? 'active' : null;
 }
+
+
 
 function laporanBeli()
 {
-    if (userMenu() == 'laporan-pembelian') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'laporan-pembelian' ? 'active' : null;
 }
+
+
 
 function laporanJual()
 {
-    if (userMenu() == 'laporan-penjualan') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'laporan-penjualan' ? 'active' : null;
 }
+
+
 
 function menuCustomer()
 {
-    if (userMenu() == 'customer') {
-        $result = 'active';
-    } else {
-        $result = null;
-    }
-
-    return $result;
+    return userMenu() == 'customer' ? 'active' : null;
 }
 
-function in_date($tgl){
+
+
+function in_date($tgl)
+{
     $tg  = substr($tgl, 8, 2);
     $bln = substr($tgl, 5, 2);
     $thn = substr($tgl, 0, 4);
+
     return $tg . "-" . $bln . "-" . $thn;
 }
 
-function omzet(){
+
+
+function omzet()
+{
     global $koneksi;
 
-    $queryOmzet = mysqli_query($koneksi, "SELECT sum(total) as omzet FROM 
-    tbl_jual_head");
-    $data = mysqli_fetch_assoc($queryOmzet);
-    $omzet = number_format($data['omzet'],0,','.'.');
+    $queryOmzet = mysqli_query($koneksi, "SELECT SUM(total) as omzet FROM tbl_jual_head");
 
-    return $omzet;
+    // Cek error query
+    if (!$queryOmzet) {
+        die("Query Omzet Error : " . mysqli_error($koneksi));
+    }
+
+    $data = mysqli_fetch_assoc($queryOmzet);
+
+    $totalOmzet = $data['omzet'] ?? 0;
+
+    return number_format($totalOmzet, 0, ',', '.');
 }
