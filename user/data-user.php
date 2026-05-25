@@ -83,7 +83,9 @@ require "../template/sidebar.php";
                                     <?php
                                     if ($user['level'] == 1) {
                                         echo "Pemilik";
-                                    }
+                                    } else if ($user['level'] == 2) {
+                                        echo "Kasir";
+                                    } 
                                     ?>
                                 </td>
                                 <td>

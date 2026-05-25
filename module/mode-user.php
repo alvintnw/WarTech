@@ -73,6 +73,17 @@ function selectUser1($level)
     return $result;
 }
 
+function selectUser2($level)
+{
+    $result = null;
+
+    if ($level == 2) {
+        $result = "selected";
+    }
+
+    return $result;
+}
+
 function update($data)
 {
     global $koneksi;

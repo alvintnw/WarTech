@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 
 if (!isset($_SESSION["ssLoginPOS"])) {
@@ -23,26 +26,31 @@ require "template/sidebar.php";
 $users = getData("SELECT * FROM tbl_user");
 $userNum = count($users);
 
+// SUPPLIER
 $suppliers = getData("SELECT * FROM tbl_supplier");
 $supplierNum = count($suppliers);
 
-$customers = getData("SELECT * FROM tbl_customer");
-$customerNum = count($customers);
+// CUSTOMER
+// sementara dibuat manual karena tabel belum ada
+$customerNum = 0;
 
+// BARANG
 $barang = getData("SELECT * FROM tbl_barang");
 $brgNum = count($barang);
 
 ?>
 
-<style>
-  /* ===== BEACH THEME OVERRIDE ===== */
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+<body>
 
-  .content-wrapper {
-    background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 50%, #fff9e6 100%) !important;
-    font-family: 'Nunito', sans-serif !important;
-    min-height: 100vh;
-  }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+body{
+    background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 50%, #fff9e6 100%);
+    font-family: 'Nunito', sans-serif;
+    margin:0;
+    padding:0;
+}
 
 .container{
     width:95%;

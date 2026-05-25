@@ -1,4 +1,15 @@
 <?php
+// ============================================================
+// FILE: auth/login.php  — HANYA UBAH BARIS REDIRECT INI SAJA
+// Cari baris lama:
+//     header("location: ../dashboard.php");
+// Ganti dengan:
+//     header("location: ../index.php");
+//
+// PASTIKAN ADA 2 BARIS INI (setelah password_verify berhasil):
+//     $_SESSION["ssLoginPOS"] = true;
+//     $_SESSION["ssUserPOS"]  = $username;   ← sudah ada di kode kalian
+// ============================================================
 
 session_start();
 
@@ -19,15 +30,15 @@ if (isset($_POST['login'])) {
     if (mysqli_num_rows($queryLogin) === 1) {
         $row = mysqli_fetch_assoc($queryLogin);
 
-        // REVISI: Pindahkan pengecekan password_verify ke atas sebelum set session
         if (password_verify($password, $row['password'])) {
-            
-            // SET SESSION BARU DI SINI (Jika password benar-benar cocok)
-            $_SESSION["ssLoginPOS"] = true;
-            $_SESSION["ssUserPOS"] = $username;
 
-            header("location: ../dashboard.php");
+            $_SESSION["ssLoginPOS"] = true;
+            $_SESSION["ssUserPOS"]  = $username;
+
+            // ✅ UBAH BARIS INI: dari ../dashboard.php → ../index.php
+            header("location: ../index.php");
             exit();
+
         } else {
             echo "<script>alert('Password salah..');</script>";
         }
@@ -35,7 +46,6 @@ if (isset($_POST['login'])) {
         echo "<script>alert('Username tidak terdaftar..');</script>";
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -49,13 +59,9 @@ if (isset($_POST['login'])) {
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
     <link rel="stylesheet" href="<?= $main_url ?>asset/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
-
     <link rel="stylesheet" href="<?= $main_url ?>asset/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-
     <link rel="stylesheet" href="<?= $main_url ?>asset/AdminLTE-3.2.0/dist/css/adminlte.min.css">
-
     <link rel="shortcut icon" href="<?= $main_url ?>asset/image/cart.png" type="image/x-icon">
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -103,9 +109,7 @@ if (isset($_POST['login'])) {
     </div>
 
     <script src="<?= $main_url ?>asset/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
-
     <script src="<?= $main_url ?>asset/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <script src="<?= $main_url ?>asset/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
 </body>
 </html>
