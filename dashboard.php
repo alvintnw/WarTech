@@ -67,101 +67,20 @@ body{
 
 .banner{
     background: linear-gradient(135deg, #0077B6 0%, #00B4D8 60%, #48CAE4 100%);
-    border-radius: 20px;
-    padding: 28px 32px;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 24px;
-    box-shadow: 0 8px 32px rgba(0, 180, 216, 0.3);
-  }
-  .beach-banner::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 200px; height: 200px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 50%;
-  }
-  .beach-banner::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; right: 80px;
-    width: 280px; height: 280px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 50%;
-  }
-  .beach-banner h2 {
-    font-size: 1.8rem;
-    font-weight: 800;
-    margin: 0 0 6px;
-  }
-  .beach-banner p {
-    margin: 0;
-    opacity: 0.85;
-    font-size: 0.95rem;
-  }
-  .beach-banner .wave-icon {
-    position: absolute;
-    right: 32px; top: 50%;
-    transform: translateY(-50%);
-    font-size: 5rem;
-    opacity: 0.18;
-  }
+    border-radius:20px;
+    padding:30px;
+    color:white;
+    margin-bottom:30px;
+}
 
-  /* ===== STAT BOXES ===== */
-  .beach-stat-card {
-    border-radius: 18px;
-    padding: 22px 20px;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: block;
-    text-decoration: none !important;
-    margin-bottom: 20px;
-  }
-  .beach-stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-    color: #fff;
-  }
-  .beach-stat-card .card-bg-icon {
-    position: absolute;
-    right: -10px; bottom: -10px;
-    font-size: 5rem;
-    opacity: 0.15;
-  }
-  .beach-stat-card .stat-label {
-    font-size: 0.82rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.85;
-    margin-bottom: 4px;
-  }
-  .beach-stat-card .stat-number {
-    font-size: 2.6rem;
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 12px;
-  }
-  .beach-stat-card .stat-footer {
-    font-size: 0.8rem;
-    opacity: 0.8;
-    border-top: 1px solid rgba(255,255,255,0.25);
-    padding-top: 10px;
-    margin-top: 4px;
-  }
+.banner h2{
+    margin:0;
+    font-size:30px;
+}
 
-  /* Box Colors */
-  .card-users    { background: linear-gradient(135deg, #FF8C00, #FFA940); }
-  .card-supplier { background: linear-gradient(135deg, #0096C7, #00B4D8); }
-  .card-customer { background: linear-gradient(135deg, #E63946, #FF6B6B); }
-  .card-barang   { background: linear-gradient(135deg, #D4AC0D, #F4D03F); color: #333 !important; }
-  .card-barang:hover { color: #333 !important; }
-  .card-barang .stat-footer { border-top-color: rgba(0,0,0,0.15); }
+.banner p{
+    margin-top:10px;
+}
 
 /* Mengubah nama dari .row menjadi .card-row agar tidak merusak Grid Bootstrap di bawah */
 .card-row{
@@ -170,38 +89,25 @@ body{
     gap:20px;
 }
 
-  .beach-card table { margin: 0; }
-  .beach-card table td {
-    padding: 12px 20px;
-    border-bottom: 1px solid #f0f9fc;
-    font-size: 0.88rem;
-  }
-  .beach-card table tr:last-child td { border-bottom: none; }
-  .beach-card table tr:hover td { background: #f0f9fc; }
+.card{
+    flex:1;
+    min-width:220px;
+    padding:25px;
+    border-radius:20px;
+    color:white;
+    box-shadow:0 6px 20px rgba(0,0,0,0.15);
+}
 
-  /* Omzet card */
-  .omzet-card .beach-card-header {
-    background: linear-gradient(90deg, #27AE60, #2ECC71);
-  }
-  .omzet-value {
-    padding: 28px 24px;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #0096C7;
-  }
-  .omzet-value span { font-size: 1rem; font-weight: 600; color: #48CAE4; }
+.card h3{
+    margin:0;
+    font-size:18px;
+}
 
-  /* ===== PAGE TITLE ===== */
-  .beach-page-title {
-    font-weight: 800;
-    font-size: 1.5rem;
-    color: #0077B6;
-    margin-bottom: 4px;
-  }
-  .breadcrumb { background: transparent !important; padding: 0 !important; }
-  .breadcrumb-item a { color: #00B4D8 !important; }
-  .breadcrumb-item.active { color: #0077B6 !important; }
-  .breadcrumb-item + .breadcrumb-item::before { color: #90E0EF; }
+.card .number{
+    font-size:42px;
+    font-weight:800;
+    margin-top:15px;
+}
 
 .users{
     background: linear-gradient(135deg, #FF8C00, #FFA940);
@@ -314,13 +220,11 @@ body{
                     </div>
 
                     <?php
-                    // LOGIKA BARU: Mengambil seluruh barang tanpa filter WHERE
                     $allStock = getData("SELECT * FROM tbl_barang");
 
                     if(count($allStock) > 0){
 
                         foreach($allStock as $row){
-                            // Melakukan pengecekan kondisi stok satu per satu secara dinamis
                             if($row['stock'] < $row['stock_minimal']){
                                 echo '
                                 <div class="stock-item">

@@ -230,17 +230,14 @@ $penjualan = getData("SELECT * FROM tbl_jual_detail WHERE no_jual = '$id'");
 
                         <tbody>
                         <?php
-                            $no = 1;
-
-                                foreach ($penjualan as $jual) { 
+                        $no = 1;
+                        foreach ($penjualan as $jual) { 
                         ?>
-                                <tr>
+                            <tr>
                                     <td><?= $no++ ?></td>
-
                                     <td>
                                         <strong><?= $jual['barcode'] ?></strong>
                                     </td>
-
                                     <td><?= $jual['nama_brg'] ?></td>
 
                                     <td class="text-center">

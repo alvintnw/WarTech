@@ -246,20 +246,16 @@ $pembelian = getData("SELECT * FROM tbl_beli_detail WHERE no_beli = '$id'");
 
                         <tbody>
 
-                            <?php
+                        <?php
                             $no = 1;
-
-                            foreach($pembelian as $beli){ ?>
-
+                            foreach($pembelian as $beli){ 
+                        ?>
                                 <tr>
-
                                     <td><?= $no++ ?></td>
-
                                     <td>
-                                        <strong><?= $beli['id_barang'] ?></strong>
+                                        <strong><?= $beli['kode_brg'] ?></strong>
                                     </td>
-
-                                    <td><?= $beli['nama_barang'] ?></td>
+                                    <td><?= $beli['nama_brg'] ?></td>
 
                                     <td class="text-center">
                                         <span class="price-badge">
