@@ -34,8 +34,8 @@ $brgNum = count($barang);
   @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
   .content-wrapper {
-    background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 50%, #fff9e6 100%) !important;
-    font-family: 'Nunito', sans-serif !important;
+    background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 50%, #fff9e6 100%);
+    font-family: 'Nunito', sans-serif;
     min-height: 100vh;
   }
 
@@ -94,7 +94,7 @@ $brgNum = count($barang);
     box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     transition: transform 0.2s, box-shadow 0.2s;
     display: block;
-    text-decoration: none !important;
+    text-decoration: none;
     margin-bottom: 20px;
   }
   .beach-stat-card:hover {
@@ -134,8 +134,8 @@ $brgNum = count($barang);
   .card-users    { background: linear-gradient(135deg, #FF8C00, #FFA940); }
   .card-supplier { background: linear-gradient(135deg, #0096C7, #00B4D8); }
   .card-customer { background: linear-gradient(135deg, #E63946, #FF6B6B); }
-  .card-barang   { background: linear-gradient(135deg, #D4AC0D, #F4D03F); color: #333 !important; }
-  .card-barang:hover { color: #333 !important; }
+  .card-barang   { background: linear-gradient(135deg, #D4AC0D, #F4D03F); color: #333; }
+  .card-barang:hover { color: #333; }
   .card-barang .stat-footer { border-top-color: rgba(0,0,0,0.15); }
 
   /* ===== INFO CARDS (Stock & Omzet) ===== */
@@ -191,9 +191,9 @@ $brgNum = count($barang);
     color: #0077B6;
     margin-bottom: 4px;
   }
-  .breadcrumb { background: transparent !important; padding: 0 !important; }
-  .breadcrumb-item a { color: #00B4D8 !important; }
-  .breadcrumb-item.active { color: #0077B6 !important; }
+  .breadcrumb { background: transparent; padding: 0; }
+  .breadcrumb-item a { color: #00B4D8; }
+  .breadcrumb-item.active { color: #0077B6; }
   .breadcrumb-item + .breadcrumb-item::before { color: #90E0EF; }
 
   /* ===== EMPTY STATE ===== */
@@ -202,6 +202,82 @@ $brgNum = count($barang);
     text-align: center;
     color: #b0c4cb;
     font-size: 0.9rem;
+  }
+
+  /* ============================================================
+     DARK MODE OVERRIDES
+     Semua override dark mode pakai !important supaya bisa
+     mengalahkan style default di atas
+  ============================================================ */
+  body.dark-mode .content-wrapper {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #1a1a2e 100%) !important;
+  }
+
+  body.dark-mode .beach-page-title {
+    color: #48CAE4 !important;
+  }
+
+  body.dark-mode .breadcrumb-item a {
+    color: #48CAE4 !important;
+  }
+
+  body.dark-mode .breadcrumb-item.active {
+    color: #90E0EF !important;
+  }
+
+  body.dark-mode .breadcrumb-item + .breadcrumb-item::before {
+    color: #4a6278 !important;
+  }
+
+  /* Banner tetap sama di dark mode (sudah gelap) */
+  body.dark-mode .beach-banner {
+    background: linear-gradient(135deg, #023e58 0%, #0077B6 60%, #0096C7 100%) !important;
+    box-shadow: 0 8px 32px rgba(0, 119, 182, 0.4) !important;
+  }
+
+  /* Stat cards — warnanya sedikit digelapkan */
+  body.dark-mode .card-users {
+    background: linear-gradient(135deg, #b85c00, #cc6f00) !important;
+  }
+  body.dark-mode .card-supplier {
+    background: linear-gradient(135deg, #005f7a, #0077B6) !important;
+  }
+  body.dark-mode .card-customer {
+    background: linear-gradient(135deg, #a01e29, #c0392b) !important;
+  }
+  body.dark-mode .card-barang {
+    background: linear-gradient(135deg, #8a6d00, #b8860b) !important;
+    color: #f5f5f5 !important;
+  }
+  body.dark-mode .card-barang:hover {
+    color: #f5f5f5 !important;
+  }
+
+  /* Info cards */
+  body.dark-mode .beach-card {
+    background: #1e2d3d !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  body.dark-mode .beach-card table td {
+    color: #cce7f0 !important;
+    border-bottom-color: #2a3f52 !important;
+  }
+
+  body.dark-mode .beach-card table tr:hover td {
+    background: #253545 !important;
+  }
+
+  body.dark-mode .omzet-value {
+    color: #48CAE4 !important;
+  }
+
+  body.dark-mode .omzet-value span {
+    color: #90E0EF !important;
+  }
+
+  body.dark-mode .empty-stock {
+    color: #4a6278 !important;
   }
 </style>
 
