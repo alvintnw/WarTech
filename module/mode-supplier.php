@@ -15,7 +15,7 @@ function insert($data)
     $ketr = mysqli_real_escape_string($koneksi, $data['ketr']);
 
     $sqlSupplier = "INSERT INTO tbl_supplier VALUES (null,
-                '$nama', '$telpon', '$  ketr', '$alamat')";
+                '$nama', '$telpon', '$ketr', '$alamat')";
 
     mysqli_query($koneksi, $sqlSupplier);
 
